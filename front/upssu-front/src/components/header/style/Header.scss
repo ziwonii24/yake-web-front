@@ -1,0 +1,24 @@
+.template-lg {
+    margin: 0 20vw;
+}
+
+.user-box-lg {
+    text-align: right;
+}
+
+.logo-box-lg {
+    text-align: center;
+}
+
+.menu-box-lg {
+    display: flex;
+
+    .col-menu {
+        width: 70%;
+    }
+
+    .col-search {
+        width: 30%;
+        text-align: right;
+    }
+}
