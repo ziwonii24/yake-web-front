@@ -1,8 +1,12 @@
 import React from 'react'
 
+import InfoCarousel from '../components/carousel/InfoCarousel'
+
 const MainPage = () => {
     return (
-        <div>Main Page</div>
+        <div>
+            <InfoCarousel />
+        </div>
     )
 }
 
