@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 
-import { createStyles, Theme, makeStyles } from '@material-ui/core/styles'
 import Skeleton from '@material-ui/lab/Skeleton';
 
+import '../../styles/scss/App.scss'
 import './style/HotKeywordList.scss'
 import './style/HotKeywordItem.scss'
 
@@ -18,14 +18,17 @@ const HotKeywordList = () => {
     })
 
     if(loading) {
-        return (
-            <div className="keywordList-lg">
-                {keywordList.map(() => (
-                    <div className="keywordItem-lg">
-                        <Skeleton animation="wave" variant="circle" width="100%" height="100%" />
-                    </div>
-                ))}
-            </div>
+        return (          
+            <div>
+                <div className="main-title">핫키워드</div>
+                <div className="keywordList-lg">
+                    {keywordList.map(() => (
+                        <div className="keywordItem-lg">
+                            <Skeleton animation="wave" variant="circle" width="100%" height="100%" />
+                        </div>
+                    ))}
+                </div>
+            </div>  
         )
     }
 

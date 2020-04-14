@@ -2,6 +2,9 @@ import React from 'react'
 
 import InfoCarousel from '../components/carousel/InfoCarousel'
 import HotKeywordList from '../components/keyword/HotKeywordList'
+import RecommendPrd from '../components/products/RecommendPrd'
+import BestPrd from '../components/products/BestPrd'
+import SpecificPrd from '../components/products/SpecificPrd'
 
 const MainPage = () => {
 
@@ -11,9 +14,9 @@ const MainPage = () => {
         <div>
             <InfoCarousel />
             <HotKeywordList />
-            {/* user && recommend products */}
-            {/* best products */}
-            {/* specific(age, gender) products */}
+            {/* user &&  */} <RecommendPrd />
+            <BestPrd />
+            <SpecificPrd />
         </div>
     )
 }
