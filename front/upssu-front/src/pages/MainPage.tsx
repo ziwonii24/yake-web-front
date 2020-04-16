@@ -2,21 +2,19 @@ import React from 'react'
 
 import InfoCarousel from '../components/carousel/InfoCarousel'
 import HotKeywordList from '../components/keyword/HotKeywordList'
-import RecommendPrd from '../components/products/RecommendPrd'
-import BestPrd from '../components/products/BestPrd'
-import SpecificPrd from '../components/products/SpecificPrd'
+import ProductList from '../components/products/ProductList'
 
 const MainPage = () => {
 
     // user
 
     return (
-        <div>
+        <div style={{ marginTop: 90 }}>
             <InfoCarousel />
             <HotKeywordList />
-            {/* user &&  */} <RecommendPrd />
-            <BestPrd />
-            <SpecificPrd />
+            {/* user &&  */} <ProductList type={'rec'} />
+            <ProductList type={'best'} />
+            <ProductList type={'spec'} />
         </div>
     )
 }

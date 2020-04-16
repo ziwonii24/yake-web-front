@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { FunctionComponent, useState, useEffect } from 'react'
 
 import Skeleton from '@material-ui/lab/Skeleton';
 
@@ -17,8 +17,14 @@ const init: PrdItemInterface = {
     maker: ''
 }
 
-const SpecificPrd = () => {
+interface ListType {
+    type: string
+}
 
+const ProductList: FunctionComponent<ListType> = (props: ListType) => {
+
+    const { type } = props
+    const title = type === 'rec' ? '추천 상품' : type === 'best' ? '인기 상품' : type === 'spec' ? '이 많이 찾은 상품' : '관련 상품'
     const [ prdList, setPrdList ] = useState<PrdItemInterface[]>([init, init, init, init])
     const [ loading, setLoading ] = useState<Boolean>(true)
 
@@ -30,8 +36,8 @@ const SpecificPrd = () => {
 
     if(loading) {
         return (          
-            <div>
-                <div className="main-title">20대 여성이 많이 찾은 상품</div>
+            <div className={type === 'rec' ? "recommand-template" : ''}>
+                <div className="main-title">{type === 'spec' && '20대 여성'}{title}</div>
                 <div className="prdList-lg">
                     {prdList.map(() => (
                         <div className="prdItem-lg">
@@ -46,8 +52,8 @@ const SpecificPrd = () => {
     }
 
     return (
-        <div>Specific Products</div>
+        <div>{title}</div>
     )
 }
 
-export default SpecificPrd
+export default ProductList
