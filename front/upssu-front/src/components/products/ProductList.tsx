@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useEffect } from 'react'
+import React, { FunctionComponent, useState, useEffect, useCallback } from 'react'
 
 import Skeleton from '@material-ui/lab/Skeleton'
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
@@ -35,12 +35,18 @@ const ProductList: FunctionComponent<ListType> = (props: ListType) => {
         // api end -> setLoading(false)
     })
 
+    const handleClickLink = useCallback(e => {
+        window.location.href = `/list/${type}`
+    }, [])
+
     if(loading) {
         return (          
             <div className={'prdList-template-lg ' + (type === 'rec' && 'recommand-template')}>
-                <div className="main-title prdList-title-box">
-                    {type === 'spec' && '20대 여성'}{title}
-                    <ArrowForwardIosIcon className='arrowIcon' />
+                <div className="main-title">
+                    <div className='prdList-title-box' onClick={handleClickLink}>
+                        {type === 'spec' && '20대 여성'}{title}
+                        <ArrowForwardIosIcon className='arrowIcon' />
+                    </div>
                 </div>
                 <div className="prdList-lg">
                     {prdList.map(() => (

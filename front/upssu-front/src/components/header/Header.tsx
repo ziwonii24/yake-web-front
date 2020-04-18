@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useEffect } from 'react'
+import React, { FunctionComponent, useState, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 
 import useWindowSize from '../../hooks/useWindowSize'
@@ -25,23 +25,27 @@ const Header: FunctionComponent = () => {
         setScroll(scrollTop)
     }
 
+    const handleClickLink = useCallback(e => {
+        window.location.href = '/'
+    }, [])
+
     return (
         <div className={'header ' + (scroll > 84 && 'header-fix')}>
             <div className="template-lg">
                 <div className="user-box-lg" hidden={scroll > 84}>
                     <Link to='/login'>로그인</Link>                    
-                    <Link to='join'>회원가입</Link>
+                    <Link to='/join'>회원가입</Link>
                 </div>
 
                 <div className="logo-box-lg" hidden={scroll > 84}>
                     {/* <h3>YAKE</h3> */}
-                    YAKE
+                    <p onClick={handleClickLink}>YAKE</p>
                 </div>
 
                 <div className='menu-box-lg'>
                     <div className="col-menu">
-                        <Link to='/symptoms'>증상별</Link>
-                        <Link to='/categories'>종류별</Link>
+                        <Link to='/list/symptoms'>증상별</Link>
+                        <Link to='/list/categories'>종류별</Link>
                     </div>
                     <div className="col-search">
                     <form noValidate autoComplete="off">
