@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useState, useEffect } from 'react'
 
-import Skeleton from '@material-ui/lab/Skeleton';
+import Skeleton from '@material-ui/lab/Skeleton'
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 
 import '../../styles/scss/App.scss'
 import './style/ProductList.scss'
@@ -36,8 +37,11 @@ const ProductList: FunctionComponent<ListType> = (props: ListType) => {
 
     if(loading) {
         return (          
-            <div className={type === 'rec' ? "recommand-template" : ''}>
-                <div className="main-title">{type === 'spec' && '20대 여성'}{title}</div>
+            <div className={'prdList-template-lg ' + (type === 'rec' && 'recommand-template')}>
+                <div className="main-title prdList-title-box">
+                    {type === 'spec' && '20대 여성'}{title}
+                    <ArrowForwardIosIcon className='arrowIcon' />
+                </div>
                 <div className="prdList-lg">
                     {prdList.map(() => (
                         <div className="prdItem-lg">

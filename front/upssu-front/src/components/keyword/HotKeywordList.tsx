@@ -19,7 +19,7 @@ const HotKeywordList = () => {
 
     if(loading) {
         return (          
-            <div>
+            <div className='keywordList-template-lg'>
                 <div className="main-title">핫키워드</div>
                 <div className="keywordList-lg">
                     {keywordList.map(() => (

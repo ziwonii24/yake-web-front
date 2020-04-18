@@ -1,10 +1,26 @@
+.prdList-template-lg {
+    padding: 5vh 0;
+}
+
 .recommand-template {
     background: whitesmoke;
-    padding: 5vh 0;
+    // padding: 5vh 0;
 }
 
 .prdList-lg {
     margin: 0 20vw;
     display: flex;
-    border: 1px solid blue;
+    // border: 1px solid blue;
+}
+
+.prdList-title-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    .arrowIcon {
+        // border: 1px solid red;
+        margin-top: 4px;
+        color: #000000a6;
+    }
 }
