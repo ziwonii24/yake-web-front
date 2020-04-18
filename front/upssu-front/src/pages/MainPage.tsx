@@ -9,8 +9,8 @@ const MainPage = () => {
     // user
 
     return (
-        <div style={{ marginTop: 90 }}>
-            <InfoCarousel />
+        <div>
+            {/* <InfoCarousel /> */}
             <HotKeywordList />
             {/* user &&  */} <ProductList type={'rec'} />
             <ProductList type={'best'} />

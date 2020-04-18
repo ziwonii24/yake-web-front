@@ -1,21 +1,66 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 import useWindowSize from '../../hooks/useWindowSize'
 
-import LargeHeader from './LargeHeader'
-import SmallHeader from './SmallHeader'
+import './style/Header.scss'
+import TextField from '@material-ui/core/TextField';
+import SearchIcon from '@material-ui/icons/Search'
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 const Header: FunctionComponent = () => {
 
-    const { width } = useWindowSize()
+    const { width } = useWindowSize()   // 768
 
-    // 여기서 유저 정보를 가지고 있고
-    // 이벤트 핸들러들 지정(로그아웃, 로그인, 등등)
+    const [ scroll, setScroll ] = useState<number>(0)
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll)
+    })
+
+    const handleScroll = () => {
+        const scrollTop =
+            (document.documentElement && document.documentElement.scrollTop) ||
+            document.body.scrollTop
+        setScroll(scrollTop)
+    }
 
     return (
-        width > 768 ?
-        <LargeHeader />
-        : <SmallHeader />
+        <div className={'header ' + (scroll > 20 && 'header-fix')}>
+            <div className="template-lg">
+                <div className="user-box-lg" hidden={scroll > 20}>
+                    <Link to='/login'>로그인</Link>                    
+                    <Link to='join'>회원가입</Link>
+                </div>
+
+                <div className="logo-box-lg" hidden={scroll > 20}>
+                    {/* <h3>YAKE</h3> */}
+                    YAKE
+                </div>
+
+                <div className='menu-box-lg'>
+                    <div className="col-menu">
+                        <Link to='/symptoms'>증상별</Link>
+                        <Link to='/categories'>종류별</Link>
+                    </div>
+                    <div className="col-search">
+                    <form noValidate autoComplete="off">
+                        <TextField
+                            id="input-with-icon-textfield"
+                            className="search-input"
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="start">
+                                        <SearchIcon />
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     )
 }
 
