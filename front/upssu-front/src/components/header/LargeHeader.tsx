@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react'
 
 import './style/Header.scss'
+import { Link } from 'react-router-dom'
 
 const LargeHeader: FunctionComponent = () => {
 
@@ -18,7 +19,10 @@ const LargeHeader: FunctionComponent = () => {
                 </div>
 
                 <div className="menu-box-lg">
-                    <div className="col-menu">증상별 | 종류별</div>
+                    <div className="col-menu">
+                        <Link to='/symptoms'>증상별</Link>
+                        <Link to='/categories'>종류별</Link>
+                    </div>
                     <div className="col-search">search input</div>
                 </div>
             </div>
