@@ -13,9 +13,9 @@ const routes = (
     <Header />
     <Switch>
         <Route exact path="/" component={MainPage} />
-        <Route exact path="/list/:mainType?" component={ItemListPage} />    {/* type: symptoms, categories, rec, best, spec */}
+        <Route exact path="/list/:mainType" component={ItemListPage} />
         <Route exact path="/search" component={SearchResultPage} />
-        <Route exact path="/detail/:id" component={ItemDetailPage} />
+        <Route exact path="/detail" component={ItemDetailPage} />
     </Switch>
     <Footer />
     </>

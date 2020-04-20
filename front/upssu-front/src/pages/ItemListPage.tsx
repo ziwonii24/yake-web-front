@@ -1,15 +1,21 @@
 import React, { FunctionComponent } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import qs from 'qs'
+import Menu from '../components/menu/Menu'
 
 interface MatchParams {
     mainType: string
     subType: string
 }
 
+// [url] /list/symptoms?sub=eye
+// [mainType] symptoms, categories, rec, best, spec
+// [subType]
+// symptoms : all, eye, brain
+// categories : all, vitamin, omega
 const ItemListPage: FunctionComponent<RouteComponentProps<MatchParams>> = ({ match, location }) => {
 
-    const listMainType = match.params.mainType || 'best'
+    const mainType = match.params.mainType || 'best'
     const query = qs.parse(location.search, {
         ignoreQueryPrefix: true
     })
@@ -17,7 +23,13 @@ const ItemListPage: FunctionComponent<RouteComponentProps<MatchParams>> = ({ mat
     const subType = query.sub
 
     return (
-        <div>Item List Page { listMainType } { subType }</div>
+        <div>
+            <Menu mainType={mainType} subType={subType} />
+
+            리스트
+
+            페이지
+        </div>
     )
 }
 

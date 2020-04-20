@@ -53,12 +53,13 @@
     }
     
     .col-search {
-        width: 70%;
-        display: grid;
-        align-items: center;
-
+        width: 100%;
+        // display: grid;
+        text-align: center;
+        padding-bottom: 0.5rem;
+        
         .search-input {
-            width: 100%;
+            width: 70%;            
         }
     }
 }

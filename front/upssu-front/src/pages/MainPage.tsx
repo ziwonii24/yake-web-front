@@ -2,7 +2,7 @@ import React from 'react'
 
 import InfoCarousel from '../components/carousel/InfoCarousel'
 import HotKeywordList from '../components/keyword/HotKeywordList'
-import ProductList from '../components/products/ProductList'
+import ProductListOneLine from '../components/products/ProductListOneLine'
 
 const MainPage = () => {
 
@@ -12,9 +12,9 @@ const MainPage = () => {
         <div>
             {/* <InfoCarousel /> */}
             <HotKeywordList />
-            {/* user &&  */} <ProductList type={'rec'} />
-            <ProductList type={'best'} />
-            <ProductList type={'spec'} />
+            {/* user &&  */} <ProductListOneLine type={'rec'} />
+            <ProductListOneLine type={'best'} />
+            <ProductListOneLine type={'spec'} />
         </div>
     )
 }
