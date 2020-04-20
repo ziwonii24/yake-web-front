@@ -16,7 +16,7 @@ const init: PrdItemInterface = {
 
 interface QueryParams {
     keyword: string
-    page: string
+    page: number
 }
 
 const ProductListMultiLine: FunctionComponent<QueryParams> = (props: QueryParams) => {
@@ -34,6 +34,8 @@ const ProductListMultiLine: FunctionComponent<QueryParams> = (props: QueryParams
     // const handleClickLink = useCallback(e => {
     //     window.location.href = `/list/${type}`
     // }, [])
+
+    console.log('list rendering again')
 
     if(loading) {
         return (          
