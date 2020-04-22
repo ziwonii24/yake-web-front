@@ -6,12 +6,12 @@ import '../styles/scss/App.scss'
 
 import ProductListMultiLine from '../components/products/ProductListMultiLine'
 
-interface PathParamsProps {
+interface Params {
     keyword: string
     page: string
 }
 
-const SearchResultPage: FunctionComponent<RouteComponentProps<PathParamsProps>> = ({ location }) => {
+const SearchResultPage: FunctionComponent<RouteComponentProps<Params>> = ({ location }) => {
 
     const query = qs.parse(location.search, {
         ignoreQueryPrefix: true
