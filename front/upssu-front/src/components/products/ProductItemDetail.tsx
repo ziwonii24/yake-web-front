@@ -2,12 +2,11 @@ import React, { FunctionComponent, useState, useEffect } from 'react'
 import axios from 'axios'
 
 import CircularProgress from '@material-ui/core/CircularProgress'
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
 
-import { PrdItemInterface, DataItemInterface } from './interface/ProductItem.interface'
+import './style/ProductItemDetail.scss'
 
-interface Props {
-    id: string 
-}
+import { DataItemInterface, ItemIdInterface } from './interface/ProductItem.interface'
 
 const init = {
     userId: -1,
@@ -16,7 +15,7 @@ const init = {
     body: ''
 }
 
-const ProductItemDetail: FunctionComponent<Props> = ({id}: Props) => {
+const ProductItemDetail: FunctionComponent<ItemIdInterface> = ({id}: ItemIdInterface) => {
 
     const [ item, setItem ] = useState<DataItemInterface>(init)
     const [ loading, setLoading ] = useState<Boolean>(true)
@@ -42,14 +41,45 @@ const ProductItemDetail: FunctionComponent<Props> = ({id}: Props) => {
 
     if(loading) {
         return (
-            <div>
+            <div className='loading-template'>
                 <CircularProgress />
             </div>
         )
     }
 
     return (
-        <div>Product Item {item.title} </div>
+        <div className='detail-template'>
+            <div className='detail-img-box'>
+
+            </div>
+            <div className='detail-desc-box'>
+                <div className='desc-title-box'>
+                    {item.title}
+                </div>
+                <div className='desc-table-box'>
+                    <Table aria-label="simple table">
+                        <TableBody>
+                            <TableRow>
+                                <TableCell>abc</TableCell>
+                                <TableCell>abcabcabcabcabcabc</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>abc</TableCell>
+                                <TableCell>abcabcabcabcabcabc</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>abc</TableCell>
+                                <TableCell>abcabcabcabcabcabc</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>abc</TableCell>
+                                <TableCell>abcabcabcabcabcabc</TableCell>
+                            </TableRow>
+                        </TableBody>
+                    </Table>
+                </div>
+            </div>
+        </div>
     )
 }
 

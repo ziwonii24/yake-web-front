@@ -1,6 +1,6 @@
 .prdItem-main-lg {
-    width: 15vw;
-    min-height: 15vw;
+    width: 18vw;
+    min-height: 18vw;
     margin: 0.5rem;
     border: 1px solid red;
 }
@@ -13,7 +13,15 @@
 }
 
 .img-box {
-    width: auto; height: auto;
-    max-width: 100px;
-    max-height: 100px;
+    width: 100%;
+    height: auto;
+    cursor: pointer; 
+    border: 1px solid green;    
+}
+
+.title-box {
+    width: 100%;
+    font-size: 16px;
+    line-height: 23px;
+    cursor: pointer;
 }

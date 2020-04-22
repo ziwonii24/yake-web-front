@@ -1,0 +1,31 @@
+.loading-template {
+    text-align: center;
+    padding: 30vh 0;
+}
+
+.detail-template {
+    display: flex;
+    margin: 0 15vw;
+    padding: 5vh 0;
+    border: 1px solid blue;
+}
+
+.detail-img-box {
+    width: 45%;
+    border: 1px solid red;
+}
+
+.detail-desc-box {
+    width: 55%;
+    border: 1px solid green;
+
+    .desc-title-box {
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 34px;
+    }
+
+    .desc-table-box {
+
+    }
+}

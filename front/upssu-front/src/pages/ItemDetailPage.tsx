@@ -5,11 +5,11 @@ import qs from 'qs'
 import ProductItemDetail from '../components/products/ProductItemDetail'
 import ProductListOneLine from '../components/products/ProductListOneLine'
 
-interface PathParamsProps {
+interface Params {
     id: string
 }
 
-const ItemDetailPage: FunctionComponent<RouteComponentProps<PathParamsProps>> = ({ location }) => {
+const ItemDetailPage: FunctionComponent<RouteComponentProps<Params>> = ({ location }) => {
 
     const query = qs.parse(location.search, {
         ignoreQueryPrefix: true

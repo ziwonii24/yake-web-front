@@ -21,3 +21,16 @@ export interface PrdItemInterface {
     score: string
     maker: string
 }
+
+export interface OneLineListTypeInterface {
+    type: string
+}
+
+export interface ItemInterface {
+    data: DataItemInterface
+    col: string
+}
+
+export interface ItemIdInterface {
+    id: string
+}
