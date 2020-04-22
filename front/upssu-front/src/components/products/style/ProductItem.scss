@@ -1,6 +1,19 @@
-.prdItem-lg {
+.prdItem-main-lg {
     width: 15vw;
     min-height: 15vw;
     margin: 0.5rem;
-    // border: 1px solid red;
+    border: 1px solid red;
+}
+
+.prdItem-list-lg {
+    width: 20vw;
+    min-height: 20vw;
+    margin: 0.5rem;
+    border: 1px solid red;
+}
+
+.img-box {
+    width: auto; height: auto;
+    max-width: 100px;
+    max-height: 100px;
 }

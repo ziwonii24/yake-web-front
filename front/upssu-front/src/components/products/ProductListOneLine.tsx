@@ -1,20 +1,37 @@
-import React, { FunctionComponent, useState, useEffect, useCallback } from 'react'
+import React, { FunctionComponent, useState, useEffect } from 'react'
+import axios from 'axios'
 
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 
 import '../../styles/scss/App.scss'
 import './style/ProductList.scss'
 
-import PrdItemInterface from './interface/ProductItem.interface'
+import { PrdItemInterface, DataItemInterface } from './interface/ProductItem.interface'
 import ProductItemSkeleton from './ProductItemSkeleton'
+import ProductItem from './ProductItem'
 
-const init: PrdItemInterface = {
+// const init: PrdItemInterface = {
+//     id: -1,
+//     name: '',
+//     img: '',
+//     price: '',
+//     score: '',
+//     maker: ''
+// }
+
+// const init: DataItemInterface = {
+//     albumId: -1,
+//     id: -1,
+//     title: '',
+//     url: '',
+//     thumbnailUrl: ''
+// }
+
+const init = {
+    userId: -1,
     id: -1,
-    name: '',
-    img: '',
-    price: '',
-    score: '',
-    maker: ''
+    title: '',
+    body: ''
 }
 
 interface ListType {
@@ -25,39 +42,55 @@ const ProductListOneLine: FunctionComponent<ListType> = (props: ListType) => {
 
     const { type } = props
     const title = type === 'rec' ? '추천 상품' : type === 'best' ? '인기 상품' : type === 'spec' ? '이 많이 찾은 상품' : '관련 상품'
-    const [ prdList, setPrdList ] = useState<PrdItemInterface[]>([init, init, init, init])
-    const [ loading, setLoading ] = useState<Boolean>(true)
+    const [ prdList, setPrdList ] = useState<DataItemInterface[]>([init, init, init, init])
+    const [ loading, setLoading ] = useState<Boolean>(false)
 
     useEffect(() => {
-        // api call
-        // setPrdList
-        // api end -> setLoading(false)
-    })
+        const fetchData = async () => {
+            setLoading(true)
 
-    const handleClickLink = useCallback(e => {
-        window.location.href = `/list/${type}`
+            try {
+                const response = await axios.get('https://jsonplaceholder.typicode.com/posts')  // /photos
+                console.log(response.data)
+                setPrdList(response.data)
+            } catch(e) {
+                console.log(e)
+            }
+            
+            setLoading(false)
+        }
+        
+        fetchData()
+
     }, [])
 
-    if(loading) {
-        return (          
-            <div className={'prdList-template-lg ' + (type === 'rec' && 'recommand-template')}>
-                <div className="main-title">
-                    <div className='prdList-title-box' onClick={handleClickLink}>
-                        {type === 'spec' && '20대 여성'}{title}
-                        <ArrowForwardIosIcon className='arrowIcon' />
-                    </div>
-                </div>
-                <div className="prdList-lg">
-                    {prdList.map(() => (
-                        <ProductItemSkeleton />
-                    ))}
-                </div>
-            </div>  
-        )
+    const handleClickLink = () => {
+        window.location.href = `/list/${type}`
     }
 
     return (
-        <div>{title}</div>
+        <div className={'prdList-template-lg ' + ((type === 'rec' || type === 'rel') && 'recommand-template')}>
+            <div className="main-title">
+                <div className='prdList-title-box' onClick={handleClickLink}>
+                    {type === 'spec' && '20대 여성'}{title}
+                    <ArrowForwardIosIcon className='arrowIcon' />
+                </div>
+            </div>
+            <div className="prdList-lg">
+                { loading ?
+                    prdList.map((data, idx) => (
+                        <ProductItemSkeleton key={idx} col={'main'} />
+                    ))
+                :
+                    <>
+                        <ProductItem data={prdList[0]} col={'main'} />
+                        <ProductItem data={prdList[1]} col={'main'} />
+                        <ProductItem data={prdList[2]} col={'main'} />
+                        <ProductItem data={prdList[3]} col={'main'} />
+                    </>
+                }
+            </div>
+        </div>
     )
 }
 

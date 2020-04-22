@@ -1,21 +1,44 @@
 import React, { FunctionComponent, useState, useEffect } from 'react'
+import axios from 'axios'
 
 import CircularProgress from '@material-ui/core/CircularProgress'
+
+import { PrdItemInterface, DataItemInterface } from './interface/ProductItem.interface'
 
 interface Props {
     id: string 
 }
 
+const init = {
+    userId: -1,
+    id: -1,
+    title: '',
+    body: ''
+}
+
 const ProductItemDetail: FunctionComponent<Props> = ({id}: Props) => {
 
-    // const [ item, setItem ] = useState
+    const [ item, setItem ] = useState<DataItemInterface>(init)
     const [ loading, setLoading ] = useState<Boolean>(true)
 
     useEffect(() => {
-        // api call
-        // setItem
-        // api end -> setLoading(false)
-    })
+        const fetchData = async () => {
+            setLoading(true)
+
+            try {
+                const response = await axios.get(`https://jsonplaceholder.typicode.com/posts/${id}`)
+                console.log(response.data)
+                setItem(response.data)
+            } catch(e) {
+                console.log(e)
+            }
+            
+            setLoading(false)
+        }
+        
+        fetchData()
+
+    }, [])
 
     if(loading) {
         return (
@@ -26,7 +49,7 @@ const ProductItemDetail: FunctionComponent<Props> = ({id}: Props) => {
     }
 
     return (
-        <div>Product Item {id} </div>
+        <div>Product Item {item.title} </div>
     )
 }
 

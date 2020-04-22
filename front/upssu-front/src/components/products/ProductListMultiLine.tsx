@@ -1,9 +1,14 @@
-import React, { FunctionComponent, useState, useEffect, useCallback } from 'react'
+import React, { FunctionComponent, useState, useEffect, useCallback, ChangeEvent } from 'react'
 
 import './style/ProductList.scss'
 
-import PrdItemInterface from './interface/ProductItem.interface'
+import Pagination from '@material-ui/lab/Pagination'
+
+import { PrdItemInterface } from './interface/ProductItem.interface'
 import ProductItemSkeleton from './ProductItemSkeleton'
+import usePromise from '../../hooks/usePromise'
+import axios from 'axios'
+import ProductItem from './ProductItem'
 
 const init: PrdItemInterface = {
     id: -1,
@@ -22,35 +27,35 @@ interface QueryParams {
 const ProductListMultiLine: FunctionComponent<QueryParams> = (props: QueryParams) => {
 
     const { keyword, page } = props
-    const [ prdList, setPrdList ] = useState<PrdItemInterface[]>([init, init, init])
-    const [ loading, setLoading ] = useState<Boolean>(true)
-
-    useEffect(() => {
-        // api call
-        // setPrdList
-        // api end -> setLoading(false)
-    })
-
-    // const handleClickLink = useCallback(e => {
-    //     window.location.href = `/list/${type}`
-    // }, [])
-
-    console.log('list rendering again')
-
-    if(loading) {
-        return (          
-            <div className='prdList-template-lg'>
-                <div className="prdList-lg">
-                    {prdList.map(() => (
-                        <ProductItemSkeleton />
-                    ))}
-                </div>
-            </div>  
-        )
+    
+    const handleChange = (e: ChangeEvent<unknown>, value: number) => {
+        window.location.href = `/search?keyword=${keyword}&page=${value}`
     }
 
+    // if(loading) {
+    //     return (          
+    //         <div className='prdList-template-lg'>
+    //             <div className="prdList-lg">
+    //                 {/* {dataList.map(() => (
+    //                     <ProductItemSkeleton col={'list'} />
+    //                 ))} */}
+    //             </div>
+    //         </div>  
+    //     )
+    // }
+
     return (
-        <div></div>
+        <div className='prdList-template-lg'>            
+            {/* <div className="prdList-lg">
+                로딩 끝 { dataList.length }
+                {dataList.map(data => (
+                    <ProductItem data={data} col={'list'} />
+                ))}
+            </div>
+            <div>
+                <Pagination count={10} page={page} onChange={handleChange} />
+            </div> */}
+        </div>
     )
 }
 

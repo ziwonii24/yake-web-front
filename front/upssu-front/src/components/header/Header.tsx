@@ -47,14 +47,14 @@ const Header: FunctionComponent = () => {
     }, [keyword])
 
     return (
-        <div className={'header ' + (scroll > 84 && 'header-fix')}>
+        <div className={'header ' + (scroll > 116 && 'header-fix')}>
             <div className="template-lg">
-                <div className="user-box-lg" hidden={scroll > 84}>
+                <div className="user-box-lg" hidden={scroll > 116}>
                     <Link to='/login'>로그인</Link>                    
                     <Link to='/join'>회원가입</Link>
                 </div>
 
-                <div className="logo-box-lg" hidden={scroll > 84}>
+                <div className="logo-box-lg" hidden={scroll > 116}>
                     {/* <h3>YAKE</h3> */}
                     <p onClick={handleClickLink}>YAKE</p>
                 </div>

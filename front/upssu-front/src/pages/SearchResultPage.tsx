@@ -1,8 +1,8 @@
-import React, { FunctionComponent, useState, useEffect, useCallback, ChangeEvent } from 'react'
+import React, { FunctionComponent } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import qs from 'qs'
 
-import Pagination from '@material-ui/lab/Pagination'
+import '../styles/scss/App.scss'
 
 import ProductListMultiLine from '../components/products/ProductListMultiLine'
 
@@ -20,21 +20,13 @@ const SearchResultPage: FunctionComponent<RouteComponentProps<PathParamsProps>> 
     const keyword = query.keyword
     const page = Number(query.page) || 1
 
-    const handleChange = (e: ChangeEvent<unknown>, value: number) => {
-        window.location.href = `/search?keyword=${keyword}&page=${value}`
-    };
-
     return (
         <div>
-            <div>
+            <div className='search-title'>
                 {keyword}에 대한 검색 결과
             </div>
             
             <ProductListMultiLine keyword={keyword} page={page} />
-            
-            <div>
-                <Pagination count={10} page={page} onChange={handleChange} />
-            </div>
         </div>
     )
 }
