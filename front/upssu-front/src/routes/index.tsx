@@ -15,7 +15,7 @@ const routes = (
         <Route exact path="/" component={MainPage} />
         <Route exact path="/search" component={SearchResultPage} />
         <Route exact path="/detail" component={ItemDetailPage} />
-        <Route exact path="/list/:mainType" component={ItemListPage} />
+        <Route exact path="/list" component={ItemListPage} />
     </Switch>
     <Footer />
     </>

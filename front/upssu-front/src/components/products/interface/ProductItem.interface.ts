@@ -26,6 +26,13 @@ export interface OneLineListTypeInterface {
     type: string
 }
 
+export interface MultiLineListTypeInterface {
+    type: string
+    keyword: string
+    tab: string
+    page: number
+}
+
 export interface ItemInterface {
     data: DataItemInterface
     col: string

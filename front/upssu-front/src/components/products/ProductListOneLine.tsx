@@ -44,7 +44,7 @@ const ProductListOneLine: FunctionComponent<OneLineListTypeInterface> = ({type}:
     }, [])
 
     const handleClickLink = () => {
-        window.location.href = `/list/${type}`
+        window.location.href = `/list?type=${type}`
     }
 
     return (

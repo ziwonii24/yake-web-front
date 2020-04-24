@@ -27,6 +27,8 @@ const Header: FunctionComponent = () => {
 
     const handleClickLink = useCallback(e => {
         window.location.href = '/'
+        localStorage.removeItem('a')
+        localStorage.removeItem('b')
     }, [])
 
     const handleChangeInput = useCallback(e => {
