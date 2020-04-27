@@ -6,6 +6,8 @@ import MainPage from '../pages/MainPage'
 import ItemListPage from '../pages/ItemListPage'
 import SearchResultPage from '../pages/SearchResultPage'
 import ItemDetailPage from '../pages/ItemDetailPage'
+import LoginPage from '../pages/LoginPage'
+import JoinPage from '../pages/JoinPage'
 import Footer from '../components/footer/Footer'
 
 const routes = (
@@ -16,6 +18,8 @@ const routes = (
         <Route exact path="/search" component={SearchResultPage} />
         <Route exact path="/detail" component={ItemDetailPage} />
         <Route exact path="/list" component={ItemListPage} />
+        <Route exact path="/login" component={LoginPage} />
+        <Route exact path="/join" component={JoinPage} />
     </Switch>
     <Footer />
     </>
