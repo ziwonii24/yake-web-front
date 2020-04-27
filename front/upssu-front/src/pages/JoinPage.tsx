@@ -1,19 +1,11 @@
 import React, { useState, ChangeEvent, MouseEvent } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-import path from 'path'
 import dotenv from 'dotenv'
 
 import { InputLabel, Select, MenuItem, RadioGroup, FormControlLabel, Radio, CircularProgress } from '@material-ui/core'
 
-dotenv.config() //{ path: path.join(__dirname, '.env') }
-
-interface UserInput {
-    user_id: string
-    user_password: string
-    user_birth_year: string
-    user_gender: string
-}
+dotenv.config()
 
 const getYearRange = () => {
     var curYear = new Date().getFullYear()
@@ -43,13 +35,6 @@ const JoinPage = () => {
     const yearArray = getYearRange()
     
     const [ loading, setLoading ] = useState<Boolean>(false)
-
-    const user: UserInput = {
-        'user_id': userId,
-        'user_password': userPass,
-        'user_birth_year': userAge,
-        'user_gender': userGender
-    }
 
     const handleChangeUserId = (e: ChangeEvent<HTMLInputElement>) => {
         setUserId(e.target.value)
@@ -99,7 +84,7 @@ const JoinPage = () => {
         }
         catch(e) {
             console.log(e)
-            setIdCheckMsg('잠시 후 다시 시도하세요.')
+            setIdCheckMsg('이미 있는 아이디입니다.')
             setIdCheckErr(false)
         }
     }
@@ -115,19 +100,23 @@ const JoinPage = () => {
         setLoading(true)
 
         try {
-            const response = await axios.post(`${SERVER_IP}/auth/signup`, {
-                // params: {
-                //     // user_id: userId,
-                //     // user_password: userPass,
-                //     // user_birth_year: userAge,
-                //     // user_gender: userGender
-                // },
-                headers: { 'Content-Type': 'application/json' },
-                params: JSON.stringify(user)
-            })
+            const response = await axios.post(
+                `${SERVER_IP}/auth/signup`, 
+                {
+                    'user_id': userId,
+                    'user_password': userPass,
+                    'user_birth_year': userAge,
+                    'user_gender': userGender   
+                },
+                { 
+                    headers: { 'Content-Type': 'application/json' }
+                }
+            )
             console.log(response.data)            
 
             // TODO : 회원가입 성공한 경우 alert띄우고 로그인 페이지로
+            alert('회원가입을 환영합니다~!')
+            window.location.href = '/login'
         }
         catch(e) {
             console.log(e)

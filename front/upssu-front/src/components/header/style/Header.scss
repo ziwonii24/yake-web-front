@@ -6,9 +6,10 @@
 }
 
 .header-fix {
-    // transition: top 0.2s ease-in-out;
+    transition: top 0.2s ease-in-out;
     position: fixed;
     z-index: 100;    
+    top: 0;
 }
 
 .template-lg {
@@ -23,7 +24,11 @@
     a { margin: 20px 5px;}
     a:link { color: black; text-decoration: none;}
     a:visited { color: black; text-decoration: none;}
-    a:hover { color: block; text-decoration: none;}    
+    a:hover { color: block; text-decoration: none;}   
+    
+    .logout-box {
+        cursor: pointer;
+    }
 }
 
 .logo-box-lg {

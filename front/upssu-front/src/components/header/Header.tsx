@@ -1,11 +1,14 @@
-import React, { FunctionComponent, useState, useEffect, useCallback, ChangeEvent, KeyboardEvent } from 'react'
+import React, { FunctionComponent, useState, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 
-import useWindowSize from '../../hooks/useWindowSize'
+import useWindowSize from '../../lib/useWindowSize'
 
-import './style/Header.scss'
 import { TextField, InputAdornment } from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search'
+
+import { getToken, logout } from '../../lib/authentication'
+
+import './style/Header.scss'
 
 const Header: FunctionComponent = () => {
 
@@ -48,26 +51,31 @@ const Header: FunctionComponent = () => {
         handleSubmit()
     }, [keyword])
 
+    const handleClickLogout = () => {
+        logout()
+        window.location.href = '/'
+    }
+
     return (
         <div className={'header ' + (scroll > 116 && 'header-fix')}>
             <div className="template-lg">
                 <div className="user-box-lg" hidden={scroll > 116}>
+                { getToken() ?                  
+                    <div className='logout-box' onClick={handleClickLogout}>로그아웃</div>
+                :
+                    <div>
                     <Link to='/login'>로그인</Link>                    
                     <Link to='/join'>회원가입</Link>
+                    </div>
+                }
                 </div>
 
                 <div className="logo-box-lg" hidden={scroll > 116}>
-                    {/* <h3>YAKE</h3> */}
                     <p onClick={handleClickLink}>YAKE</p>
                 </div>
 
                 <div className='menu-box-lg'>
-                    {/* <div className="col-menu">
-                        <Link to='/list/symptoms'>증상별</Link>
-                        <Link to='/list/categories'>종류별</Link>
-                    </div> */}
                     <div className="col-search">
-                    {/* <form action={`/search?keyword=${keyword}`} method='get'> */}
                         <TextField
                             id="input-with-icon-textfield"
                             className="search-input"
@@ -82,11 +90,11 @@ const Header: FunctionComponent = () => {
                             onChange={handleChangeInput}
                             onKeyDown={handleEnter}
                         />
-                    {/* </form> */}
                     </div>
                 </div>
             </div>
         </div>
+        
     )
 }
 
