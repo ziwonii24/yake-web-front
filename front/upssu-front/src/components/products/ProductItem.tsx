@@ -14,10 +14,10 @@ const ProductItem: FunctionComponent<PrdItemInterface> = (props: PrdItemInterfac
 
     return (
         <div>
-            <div onClick={handleClickItem}>
+            <div className='img-box' onClick={handleClickItem}>
                 <img src={imgUrl} alt='img' />
             </div>
-            <div onClick={handleClickItem}>
+            <div className='title-box' onClick={handleClickItem}>
                 {title}
             </div>
         </div>

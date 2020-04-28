@@ -1,26 +1,16 @@
-.prdItem-main-lg {
-    width: 18vw;
-    min-height: 18vw;
-    margin: 0.5rem;
-    border: 1px solid red;
-}
-
-.prdItem-list-lg {
-    width: 20vw;
-    min-height: 20vw;
-    margin: 0.5rem;
-    border: 1px solid red;
-}
-
 .img-box {
     width: 100%;
     height: auto;
     cursor: pointer; 
-    border: 1px solid green;    
+
+    img {
+        width: 100%;
+    }
 }
 
 .title-box {
     width: 100%;
+    height: auto;
     font-size: 16px;
     line-height: 23px;
     cursor: pointer;
