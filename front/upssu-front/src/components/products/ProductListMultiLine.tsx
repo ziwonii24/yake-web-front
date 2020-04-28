@@ -1,7 +1,8 @@
-import React, { FunctionComponent, useState, useEffect } from 'react'
+import React, { FunctionComponent, useState, useEffect, ChangeEvent } from 'react'
 import axios from 'axios'
 import dotenv from 'dotenv'
 
+import Pagination from '@material-ui/lab/Pagination'
 import { CircularProgress, Grid, Paper } from '@material-ui/core'
 
 import './style/ProductItemDetail.scss'
@@ -40,17 +41,37 @@ const ProductListMultiLine: FunctionComponent<MultiLineListTypeInterface> = (pro
                 if(type === 'search' && tab === 'a') {
                     console.log('token', token)
                     console.log(!token ? '토큰 없어' : '토큰있어')
-                    response = !token ? 
-                        await axios.get(`${SERVER_IP}/search/elastic?keyword=${keyword}&page=${page-1}`)
-                        : await axios.get(
-                            `${SERVER_IP}/auth/search/elastic?keyword=${keyword}&page=${page-1}`,
-                            { 
-                                headers: { 
-                                    'Content-Type': 'application/json',
-                                    'Authorization': `Bearer ${token}`
+                    console.log(!page ? '페이지 없어' : '페이지 있어')
+
+                    if(!token) {
+                        if(!page) {
+                            response = axios.get(`${SERVER_IP}/search/elastic?keyword=${keyword}`)
+                        } else {
+                            response = axios.get(`${SERVER_IP}/search/elastic?keyword=${keyword}&page=${page-1}`)
+                        }
+                    } else {
+                        if(!page) {
+                            response = await axios.get(
+                                `${SERVER_IP}/auth/search/elastic?keyword=${keyword}`,
+                                { 
+                                    headers: { 
+                                        'Content-Type': 'application/json',
+                                        'Authorization': `Bearer ${token}`
+                                    }
                                 }
-                            }
-                        )
+                            )
+                        } else {
+                            response = await axios.get(
+                                `${SERVER_IP}/auth/search/elastic?keyword=${keyword}&page=${page-1}`,
+                                { 
+                                    headers: { 
+                                        'Content-Type': 'application/json',
+                                        'Authorization': `Bearer ${token}`
+                                    }
+                                }
+                            )
+                        }
+                    }
                 }
                 // 스마트 검색
                 else if(type === 'search' && tab === 'b') {
@@ -79,6 +100,12 @@ const ProductListMultiLine: FunctionComponent<MultiLineListTypeInterface> = (pro
         )
     }
 
+    const handleChangePage = (e: ChangeEvent<unknown>, value: number) => {
+        localStorage.setItem(tab, value.toString())
+
+        window.location.href = `/search?keyword=${keyword}&tab=${tab}&page=${value}`
+    }
+
     return (
         <div>
             <Grid container spacing={3}>
@@ -90,6 +117,8 @@ const ProductListMultiLine: FunctionComponent<MultiLineListTypeInterface> = (pro
                     </Grid>
                 ))}
             </Grid>
+
+            <Pagination count={10} page={page || 1} onChange={handleChangePage} />
         </div>
     )
 }

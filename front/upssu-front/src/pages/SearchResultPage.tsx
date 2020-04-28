@@ -2,7 +2,6 @@ import React, { FunctionComponent, useState, ChangeEvent } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import qs from 'qs'
 
-import Pagination from '@material-ui/lab/Pagination'
 import { Tabs, Tab } from '@material-ui/core'
 
 import '../styles/scss/App.scss'
@@ -23,7 +22,7 @@ const SearchResultPage: FunctionComponent<RouteComponentProps<Params>> = ({ loca
 
     const keyword = query.keyword
     const tab = query.tab || 'a'
-    const page = Number(query.page) || 1
+    const page = Number(query.page) // || 1
 
     localStorage.getItem('a') || localStorage.setItem('a', '1')
     localStorage.getItem('b') || localStorage.setItem('b', '1')
@@ -34,12 +33,6 @@ const SearchResultPage: FunctionComponent<RouteComponentProps<Params>> = ({ loca
         console.log('savedPage', savedPage)
 
         window.location.href = `/search?keyword=${keyword}&tab=${selectedTab}&page=${savedPage}`
-    }
-
-    const handleChangePage = (e: ChangeEvent<unknown>, value: number) => {
-        localStorage.setItem(tab, value.toString())
-
-        window.location.href = `/search?keyword=${keyword}&tab=${tab}&page=${value}`
     }
 
     return (
@@ -60,8 +53,6 @@ const SearchResultPage: FunctionComponent<RouteComponentProps<Params>> = ({ loca
             </Tabs>       
             
             <ProductListMultiLine type={'search'} keyword={keyword} tab={tab} page={page} />
-
-            <Pagination count={10} page={page} onChange={handleChangePage} />            
         </div>
     )
 }
