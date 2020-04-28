@@ -1,33 +1,66 @@
 import React, { FunctionComponent, useState, useEffect } from 'react'
 import axios from 'axios'
+import dotenv from 'dotenv'
 
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
 
 import './style/ProductItemDetail.scss'
 
-import { DataItemInterface, ItemIdInterface } from './interface/ProductItem.interface'
+import { getToken } from '../../lib/authentication'
+import { ItemIdInterface, PrdItemDetailInterface } from './interface/ProductItem.interface'
 
-const init = {
-    userId: -1,
-    id: -1,
-    title: '',
-    body: ''
+dotenv.config()
+
+const init: PrdItemDetailInterface = {
+    id: '',
+    displayName: '',
+    averageRating: '',
+    imgurl: '',
+    brandName: '',
+    description: '',
+    ingredients: '',
+    retailPrice: '',
+    supplementFacts: '',
+    suggestedUse: '',
+    warnings: ''
 }
 
 const ProductItemDetail: FunctionComponent<ItemIdInterface> = ({id}: ItemIdInterface) => {
 
-    const [ item, setItem ] = useState<DataItemInterface>(init)
+    const SERVER_IP = process.env.REACT_APP_SERVER_IP
+
     const [ loading, setLoading ] = useState<Boolean>(true)
+    const [ item, setItem ] = useState<PrdItemDetailInterface>(init)
 
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true)
 
             try {
-                const response = await axios.get(`https://jsonplaceholder.typicode.com/posts/${id}`)
+                const token = getToken()
+                let response: any;
+
+                console.log('token', token)
+                console.log(!token ? '토큰 없어' : '토큰있어')
+
+                if(!token) {
+                    response = await axios.get(`${SERVER_IP}/product/${id}`)
+                } else {
+                    response = await axios.get(
+                        `${SERVER_IP}/auth/product/${id}`,
+                        { 
+                            headers: { 
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${token}`
+                            }
+                        }
+                    )
+                }
+
                 console.log(response.data)
                 setItem(response.data)
+
             } catch(e) {
                 console.log(e)
             }
@@ -50,30 +83,46 @@ const ProductItemDetail: FunctionComponent<ItemIdInterface> = ({id}: ItemIdInter
     return (
         <div className='detail-template'>
             <div className='detail-img-box'>
-
+                <img src={item.imgurl} alt='img' />
             </div>
             <div className='detail-desc-box'>
                 <div className='desc-title-box'>
-                    {item.title}
+                    {item.displayName}
                 </div>
                 <div className='desc-table-box'>
                     <Table aria-label="simple table">
                         <TableBody>
                             <TableRow>
-                                <TableCell>abc</TableCell>
-                                <TableCell>abcabcabcabcabcabc</TableCell>
+                                <TableCell className='td-title'>제조사</TableCell>
+                                <TableCell>{item.brandName}</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell>abc</TableCell>
-                                <TableCell>abcabcabcabcabcabc</TableCell>
+                                <TableCell className='td-title'>가격</TableCell>
+                                <TableCell>{item.retailPrice}</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell>abc</TableCell>
-                                <TableCell>abcabcabcabcabcabc</TableCell>
+                                <TableCell className='td-title'>평점</TableCell>
+                                <TableCell>{item.averageRating}</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell>abc</TableCell>
-                                <TableCell>abcabcabcabcabcabc</TableCell>
+                                <TableCell className='td-title'>재료</TableCell>
+                                <TableCell><div dangerouslySetInnerHTML ={ {__html: item.ingredients}}></div></TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell className='td-title'>주의사항</TableCell>
+                                <TableCell><div dangerouslySetInnerHTML ={ {__html: item.warnings}}></div></TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell className='td-title'>설명</TableCell>
+                                <TableCell><div dangerouslySetInnerHTML ={ {__html: item.description}}></div></TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell className='td-title'>섭취방법</TableCell>
+                                <TableCell><div dangerouslySetInnerHTML ={ {__html: item.suggestedUse}}></div></TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell className='td-title'>영양 성분 정보</TableCell>
+                                <TableCell><div dangerouslySetInnerHTML ={ {__html: item.supplementFacts}}></div></TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>

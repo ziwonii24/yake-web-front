@@ -19,6 +19,20 @@ export interface PrdItemInterface {
     title: string
 }
 
+export interface PrdItemDetailInterface {
+    id: string
+    displayName: string
+    averageRating: string
+    imgurl: string
+    brandName: string
+    description: string
+    ingredients: string
+    retailPrice: string
+    supplementFacts: string
+    suggestedUse: string
+    warnings: string
+}
+
 export interface OneLineListTypeInterface {
     type: string
 }

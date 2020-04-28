@@ -45,9 +45,9 @@ const ProductListMultiLine: FunctionComponent<MultiLineListTypeInterface> = (pro
 
                     if(!token) {
                         if(!page) {
-                            response = axios.get(`${SERVER_IP}/search/elastic?keyword=${keyword}`)
+                            response = await axios.get(`${SERVER_IP}/search/elastic?keyword=${keyword}`)
                         } else {
-                            response = axios.get(`${SERVER_IP}/search/elastic?keyword=${keyword}&page=${page-1}`)
+                            response = await axios.get(`${SERVER_IP}/search/elastic?keyword=${keyword}&page=${page-1}`)
                         }
                     } else {
                         if(!page) {
@@ -78,7 +78,7 @@ const ProductListMultiLine: FunctionComponent<MultiLineListTypeInterface> = (pro
 
                 }
                 
-                console.log(response.data)
+                console.log('결과: ', response.data)
                 setItemList(response.data)
                 
             } catch(e) {

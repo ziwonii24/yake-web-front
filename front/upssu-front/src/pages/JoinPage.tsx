@@ -105,7 +105,7 @@ const JoinPage = () => {
                 {
                     'user_id': userId,
                     'user_password': userPass,
-                    'user_birth_year': userAge,
+                    'user_birth_year': userAge.toString(),
                     'user_gender': userGender   
                 },
                 { 
