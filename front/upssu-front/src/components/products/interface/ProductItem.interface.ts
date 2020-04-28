@@ -14,12 +14,9 @@ export interface DataItemInterface {
 }
 
 export interface PrdItemInterface {
-    id: number
-    name: string
-    img: string
-    price: string
-    score: string
-    maker: string
+    id: string
+    imgUrl: string
+    title: string
 }
 
 export interface OneLineListTypeInterface {
@@ -31,11 +28,6 @@ export interface MultiLineListTypeInterface {
     keyword: string
     tab: string
     page: number
-}
-
-export interface ItemInterface {
-    data: DataItemInterface
-    col: string
 }
 
 export interface ItemIdInterface {

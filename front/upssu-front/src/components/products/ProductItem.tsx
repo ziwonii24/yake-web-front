@@ -2,23 +2,23 @@ import React, { FunctionComponent } from 'react'
 
 import './style/ProductItem.scss'
 
-import { ItemInterface } from './interface/ProductItem.interface'
+import { PrdItemInterface } from './interface/ProductItem.interface'
 
-const ProductItem: FunctionComponent<ItemInterface> = (props: ItemInterface) => {
+const ProductItem: FunctionComponent<PrdItemInterface> = (props: PrdItemInterface) => {
 
-    const { data, col } = props
+    const { id, imgUrl, title } = props
 
     const handleClickItem = () => {
-        window.location.href = `/detail?id=${data.id}`
+        window.location.href = `/detail?id=${id}`
     }
 
     return (
-        <div className={col === 'main' ? 'prdItem-main-lg' : 'prdItem-list-lg'}>
-            <div className='img-box' onClick={handleClickItem}>
-                {/* <img src={data.thumbnailUrl} alt='img' /> */}
+        <div>
+            <div onClick={handleClickItem}>
+                <img src={imgUrl} alt='img' />
             </div>
-            <div className='title-box' onClick={handleClickItem}>
-                {data.title}
+            <div onClick={handleClickItem}>
+                {title}
             </div>
         </div>
     )

@@ -62,10 +62,10 @@ const ProductListOneLine: FunctionComponent<OneLineListTypeInterface> = ({type}:
                     ))
                 :
                     <>
-                        <ProductItem data={prdList[0]} col={'main'} />
+                        {/* <ProductItem data={prdList[0]} col={'main'} />
                         <ProductItem data={prdList[1]} col={'main'} />
                         <ProductItem data={prdList[2]} col={'main'} />
-                        <ProductItem data={prdList[3]} col={'main'} />
+                        <ProductItem data={prdList[3]} col={'main'} /> */}
                     </>
                 }
             </div>

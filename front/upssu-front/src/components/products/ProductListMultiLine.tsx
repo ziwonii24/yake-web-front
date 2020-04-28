@@ -1,33 +1,72 @@
 import React, { FunctionComponent, useState, useEffect } from 'react'
 import axios from 'axios'
+import dotenv from 'dotenv'
 
-import CircularProgress from '@material-ui/core/CircularProgress'
+import { CircularProgress, Grid, Paper } from '@material-ui/core'
 
 import './style/ProductItemDetail.scss'
 
-import { MultiLineListTypeInterface } from './interface/ProductItem.interface'
+import { getToken } from '../../lib/authentication'
+import { MultiLineListTypeInterface, PrdItemInterface } from './interface/ProductItem.interface'
+
+import ProductItem from './ProductItem'
+
+dotenv.config()
+
+const init: PrdItemInterface = {
+    id: '',
+    imgUrl: '',
+    title: ''
+}
 
 const ProductListMultiLine: FunctionComponent<MultiLineListTypeInterface> = (props: MultiLineListTypeInterface) => {
 
-    const { type, keyword, tab, page } = props
+    const SERVER_IP = process.env.REACT_APP_SERVER_IP
 
+    const { type, keyword, tab, page } = props
+    
     const [ loading, setLoading ] = useState<Boolean>(true)
+    const [ itemList, setItemList ] = useState<PrdItemInterface[]>([init])
 
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true)
 
             try {
-                const response = await axios.get(`https://jsonplaceholder.typicode.com/posts`)
+                const token = getToken()
+                let response: any;
+
+                // 일반 검색
+                if(type === 'search' && tab === 'a') {
+                    console.log('token', token)
+                    console.log(!token ? '토큰 없어' : '토큰있어')
+                    response = !token ? 
+                        await axios.get(`${SERVER_IP}/search/elastic?keyword=${keyword}&page=${page-1}`)
+                        : await axios.get(
+                            `${SERVER_IP}/auth/search/elastic?keyword=${keyword}&page=${page-1}`,
+                            { 
+                                headers: { 
+                                    'Content-Type': 'application/json',
+                                    'Authorization': `Bearer ${token}`
+                                }
+                            }
+                        )
+                }
+                // 스마트 검색
+                else if(type === 'search' && tab === 'b') {
+
+                }
+                
                 console.log(response.data)
-                // setItem(response.data)
+                setItemList(response.data)
+                
             } catch(e) {
                 console.log(e)
             }
             
-            // setLoading(false)
+            setLoading(false)
         }
-        
+
         fetchData()
 
     }, [])
@@ -42,75 +81,17 @@ const ProductListMultiLine: FunctionComponent<MultiLineListTypeInterface> = (pro
 
     return (
         <div>
-            type : {type}<br />
-            keyword : {keyword}<br />
-            tab : {tab}<br />
-            page : {page}
+            <Grid container spacing={3}>
+                { itemList.map(item => (
+                    <Grid item lg={3} md={4} sm={6} xs={12} key={item.id}>
+                    <Paper>
+                        <ProductItem id={item.id} imgUrl={item.imgUrl} title={item.title} />
+                    </Paper>
+                    </Grid>
+                ))}
+            </Grid>
         </div>
     )
 }
 
 export default ProductListMultiLine
-
-// import React, { FunctionComponent, useState, useEffect, useCallback, ChangeEvent } from 'react'
-
-// import './style/ProductList.scss'
-
-// import Pagination from '@material-ui/lab/Pagination'
-
-// import { PrdItemInterface } from './interface/ProductItem.interface'
-// import ProductItemSkeleton from './ProductItemSkeleton'
-// import usePromise from '../../hooks/usePromise'
-// import axios from 'axios'
-// import ProductItem from './ProductItem'
-
-// const init: PrdItemInterface = {
-//     id: -1,
-//     name: '',
-//     img: '',
-//     price: '',
-//     score: '',
-//     maker: ''
-// }
-
-// interface QueryParams {
-//     keyword: string
-//     page: number
-// }
-
-// const ProductListMultiLine: FunctionComponent<QueryParams> = (props: QueryParams) => {
-
-//     const { keyword, page } = props
-    
-//     const handleChange = (e: ChangeEvent<unknown>, value: number) => {
-//         window.location.href = `/search?keyword=${keyword}&page=${value}`
-//     }
-
-//     // if(loading) {
-//     //     return (          
-//     //         <div className='prdList-template-lg'>
-//     //             <div className="prdList-lg">
-//     //                 {/* {dataList.map(() => (
-//     //                     <ProductItemSkeleton col={'list'} />
-//     //                 ))} */}
-//     //             </div>
-//     //         </div>  
-//     //     )
-//     // }
-
-//     return (
-//         <div className='prdList-template-lg'>            
-//             {/* <div className="prdList-lg">
-//                 로딩 끝 { dataList.length }
-//                 {dataList.map(data => (
-//                     <ProductItem data={data} col={'list'} />
-//                 ))}
-//             </div>
-//             <div>
-//                 <Pagination count={10} page={page} onChange={handleChange} />
-//             </div> */}
-//         </div>
-//     )
-// }
-
-// export default ProductListMultiLine
