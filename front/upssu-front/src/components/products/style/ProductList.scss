@@ -8,18 +8,12 @@
 
 /////////////////////////////////////
 
-.prdList-template-lg {
+.prdList-one-template {
     padding: 7vh 0;
 }
 
-.recommand-template {
+.prdList-one-color-template {
     background: whitesmoke;
-}
-
-.prdList-lg {
-    margin: 0 15vw;
-    display: flex;
-    border: 1px solid blue;
 }
 
 .prdList-title-box {
@@ -27,8 +21,15 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    
-    .arrowIcon {
-        color: #000000a6;
-    }
+}
+
+.prdList-one-list {
+    margin: 0 15vw;
+    display: flex;
+    // border: 1px solid blue;
+}
+
+.prdList-one-item-box {
+    // border: 1px solid red;
+    padding: 0.5rem;
 }

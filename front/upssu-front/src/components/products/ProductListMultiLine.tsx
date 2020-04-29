@@ -112,7 +112,7 @@ const ProductListMultiLine: FunctionComponent<MultiLineListTypeInterface> = (pro
         <div className='prdList-multi-template'>
             <Grid container spacing={5}>
                 { itemList.map(item => (
-                    <Grid className='grid-item' item lg={3} md={4} sm={6} xs={12} key={item.id}>
+                    <Grid item lg={3} md={4} sm={6} xs={12} key={item.id}>
                         <ProductItem id={item.id} imgUrl={item.imgUrl} title={item.title} />
                     </Grid>
                 ))}

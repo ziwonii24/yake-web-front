@@ -61,7 +61,7 @@ const Header: FunctionComponent = () => {
             <div className="template-lg">
                 <div className="user-box-lg" hidden={scroll > 116}>
                 { getToken() ?                  
-                    <div className='logout-box' onClick={handleClickLogout}>로그아웃</div>
+                    <a className='logout-box' onClick={handleClickLogout}>로그아웃</a>
                 :
                     <div>
                     <Link to='/login'>로그인</Link>                    
