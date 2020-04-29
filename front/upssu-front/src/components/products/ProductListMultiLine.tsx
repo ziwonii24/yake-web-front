@@ -3,9 +3,9 @@ import axios from 'axios'
 import dotenv from 'dotenv'
 
 import Pagination from '@material-ui/lab/Pagination'
-import { CircularProgress, Grid, Paper } from '@material-ui/core'
+import { CircularProgress, Grid } from '@material-ui/core'
 
-import './style/ProductItemDetail.scss'
+import './style/ProductList.scss'
 
 import { getToken } from '../../lib/authentication'
 import { MultiLineListTypeInterface, PrdItemInterface } from './interface/ProductItem.interface'
@@ -28,6 +28,7 @@ const ProductListMultiLine: FunctionComponent<MultiLineListTypeInterface> = (pro
     
     const [ loading, setLoading ] = useState<Boolean>(true)
     const [ itemList, setItemList ] = useState<PrdItemInterface[]>([init])
+    const [ totalPage, setTotalPage ] = useState<number>(1)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -79,7 +80,8 @@ const ProductListMultiLine: FunctionComponent<MultiLineListTypeInterface> = (pro
                 }
                 
                 console.log('결과: ', response.data)
-                setItemList(response.data)
+                setItemList(response.data.products)
+                setTotalPage(response.data.totalPage)
                 
             } catch(e) {
                 console.log(e)
@@ -108,17 +110,15 @@ const ProductListMultiLine: FunctionComponent<MultiLineListTypeInterface> = (pro
 
     return (
         <div className='prdList-multi-template'>
-            <Grid container spacing={3}>
+            <Grid container spacing={5}>
                 { itemList.map(item => (
-                    <Grid item lg={3} md={4} sm={6} xs={12} key={item.id}>
-                    <Paper>
+                    <Grid className='grid-item' item lg={3} md={4} sm={6} xs={12} key={item.id}>
                         <ProductItem id={item.id} imgUrl={item.imgUrl} title={item.title} />
-                    </Paper>
                     </Grid>
                 ))}
             </Grid>
 
-            <Pagination count={10} page={page || 1} onChange={handleChangePage} />
+            <Pagination className='pagination' count={totalPage} page={page || 1} onChange={handleChangePage} />
         </div>
     )
 }
