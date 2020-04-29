@@ -5,7 +5,8 @@ import dotenv from 'dotenv'
 import '../../styles/scss/App.scss'
 import './style/ProductList.scss'
 
-import { OneLineListTypeInterface, PrdItemInterface } from './interface/ProductItem.interface'
+import { getToken, decode } from '../../lib/authentication'
+import { OneLineListTypeInterface, PrdItemInterface, SpecInterface } from './interface/ProductItem.interface'
 
 import ProductItemSkeleton from './ProductItemSkeleton'
 import ProductItem from './ProductItem'
@@ -18,12 +19,54 @@ const init: PrdItemInterface = {
     title: ''
 }
 
+const getSpecObject = (): SpecInterface => {
+    const token = getToken()
+    if(token) {
+        const tokenDecoded = decode(token)
+        return (
+            {
+                age: tokenDecoded.identity.user_birth_year,
+                gender: tokenDecoded.identity.user_gender
+            }
+        )
+    }
+
+    // random
+    const curYear = new Date().getFullYear()
+    const rAge = curYear - Math.floor(Math.random() * 100)
+    const rGenderIdx = Math.floor(Math.random() * 2)
+    const rGender = ['male', 'female']
+
+    return (
+        {
+            age: rAge.toString(),
+            gender: rGender[rGenderIdx]
+        }
+    )
+}
+
+const getSpecTitle = (obj: SpecInterface): string => {
+    const age = Number(obj.age)
+    const gender = (obj.gender === 'male') ? '남성' : '여성'
+
+    const curYear = new Date().getFullYear()
+    const calAge = Math.floor((curYear - age + 1) / 10) * 10
+
+    return `${calAge}대 ${gender}`
+}
+
 const ProductListOneLine: FunctionComponent<OneLineListTypeInterface> = ({type}: OneLineListTypeInterface) => {
 
     const SERVER_IP = process.env.REACT_APP_SERVER_IP
 
     const title = type === 'rec' ? '추천 상품' : type === 'best' ? '인기 상품' : type === 'spec' ? '이 많이 찾은 상품' : '관련 상품'
-    const [ itemList, setItemList ] = useState<PrdItemInterface[]>([init, init, init, init])
+
+    const specObject: SpecInterface = getSpecObject()
+    console.log(specObject)
+
+    const specTitle = (type === 'spec') ? getSpecTitle(specObject) : ''
+
+    const [ itemList, setItemList ] = useState<PrdItemInterface[]>([])
     const [ loading, setLoading ] = useState<Boolean>(false)
 
     useEffect(() => {
@@ -31,20 +74,51 @@ const ProductListOneLine: FunctionComponent<OneLineListTypeInterface> = ({type}:
             setLoading(true)
 
             try {
+                const token = getToken()
                 let response: any;
 
                 if(type === 'rec') {
                     // response = await axios.get(`${SERVER_IP}/search/elastic?keyword=${keyword}`)
+                    // response = await axios.get(`${SERVER_IP}/products?limit=4&page=0`)
+
+                    // console.log('인기 결과', response.data.result)
+                    // setItemList(response.data.result)
                 } else if(type === 'best') {
-                    // response = await axios.get(`${SERVER_IP}/search/elastic?keyword=${keyword}`)
+                    // response = await axios.get(`${SERVER_IP}/products?limit=4&page=0`)
+
+                    // console.log('인기 결과', response.data.result)
+                    // setItemList(response.data.result)
+
                 } else if(type === 'spec') {
-                    // response = await axios.get(`${SERVER_IP}/search/elastic?keyword=${keyword}`)
+                    if(!token) {
+                        response = await axios.post(
+                            `${SERVER_IP}/products/recommendbyage`, 
+                            specObject,
+                            { 
+                                headers: { 'Content-Type': 'application/json' }
+                            }
+                        )
+                    } else {
+                        response = await axios.get(
+                            `${SERVER_IP}/auth/products/recommendbyage`,
+                            { 
+                                headers: { 
+                                    'Content-Type': 'application/json',
+                                    'Authorization': `Bearer ${token}`
+                                }
+                            }
+                        )
+                    }
+
+                    console.log('연령별 결과', response.data.result)
+                    setItemList(response.data.result)
+
+
+
                 } else if(type === 'rel') {
                     // response = await axios.get(`${SERVER_IP}/search/elastic?keyword=${keyword}`)
                 }
-
-                // console.log(response.data)
-                // setItemList(response.data)
+                
             } catch(e) {
                 console.log(e)
             }
@@ -60,18 +134,18 @@ const ProductListOneLine: FunctionComponent<OneLineListTypeInterface> = ({type}:
         <div className={'prdList-one-template ' + ((type === 'rec' || type === 'rel') && 'prdList-one-color-template')}>
             <div className="main-title">
                 <div className='prdList-title-box'>
-                    {type === 'spec' && '20대 여성'}{title}
+                    {type === 'spec' && specTitle}{title}
                 </div>
             </div>
             <div className='prdList-one-list'>
                 { loading ?
-                    itemList.map((data, idx) => (
+                    [1,2,3,4].map((data, idx) => (
                         <ProductItemSkeleton key={idx} col={'main'} />
                     ))
                 :
                     itemList.map(item => (
                         <div className='prdList-one-item-box' key={item.id}>
-                            <ProductItem id={'5ea1b53af8dbb203452480bc'} imgUrl={'https://s3.images-iherb.com/lab/lab11347/v/0.jpg'} title={'날씬한 몸, 고 단백 식사 대체 쉐이크, 딸기, 20 패킷, 2.78 온스 (79 g)'} />
+                            <ProductItem id={item.id} imgUrl={item.imgUrl} title={item.title} />
                         </div>
                     ))
                 }

@@ -54,13 +54,13 @@ const ProductListMultiLine: FunctionComponent<MultiLineListTypeInterface> = (pro
                     } else {
                         if(!page) {
                             response = await axios.get(
-                                `${SERVER_IP}:8088/auth/search/elastic?keyword=${keyword}`,
-                                { 
-                                    headers: { 
-                                        'Content-Type': 'application/json',
-                                        'Authorization': `Bearer ${token}`
+                                `${SERVER_IP}/auth/search/elastic?keyword=${keyword}`,
+                                    { 
+                                        headers: { 
+                                            'Content-Type': 'application/json',
+                                            'Authorization': `Bearer ${token}`
+                                        }
                                     }
-                                }
                             )
                         } else {
                             response = await axios.get(

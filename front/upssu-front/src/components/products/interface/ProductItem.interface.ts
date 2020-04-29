@@ -33,3 +33,8 @@ export interface MultiLineListTypeInterface {
 export interface ItemIdInterface {
     id: string
 }
+
+export interface SpecInterface {
+    age: string
+    gender: string
+}

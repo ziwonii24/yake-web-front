@@ -1,9 +1,11 @@
 import jwt_decode from 'jwt-decode';
 
 interface TokenInfo {
-    user_id: string
-    user_birth_year: string
-    user_gender: string
+    identity: {
+        user_id: string
+        user_birth_year: string
+        user_gender: string
+    }
 }
 
 export const decode = (token: string) => {
