@@ -17,7 +17,8 @@ dotenv.config()
 const init: PrdItemInterface = {
     id: '',
     imgUrl: '',
-    title: ''
+    title: '',
+    score: ''
 }
 
 const ProductListMultiLine: FunctionComponent<MultiLineListTypeInterface> = (props: MultiLineListTypeInterface) => {
@@ -53,7 +54,7 @@ const ProductListMultiLine: FunctionComponent<MultiLineListTypeInterface> = (pro
                     } else {
                         if(!page) {
                             response = await axios.get(
-                                `${SERVER_IP}/auth/search/elastic?keyword=${keyword}`,
+                                `${SERVER_IP}:8088/auth/search/elastic?keyword=${keyword}`,
                                 { 
                                     headers: { 
                                         'Content-Type': 'application/json',
@@ -73,14 +74,16 @@ const ProductListMultiLine: FunctionComponent<MultiLineListTypeInterface> = (pro
                             )
                         }
                     }
+
+                    setItemList(response.data.products)
                 }
                 // 스마트 검색
                 else if(type === 'search' && tab === 'b') {
+                    response = await axios.get(`http://52.78.166.109:9000/deepsearch?keyword=${keyword}&page=${page || 1}`)
 
+                    setItemList(response.data.result)
                 }
                 
-                console.log('결과: ', response.data)
-                setItemList(response.data.products)
                 setTotalPage(response.data.totalPage)
                 
             } catch(e) {
@@ -113,7 +116,7 @@ const ProductListMultiLine: FunctionComponent<MultiLineListTypeInterface> = (pro
             <Grid container spacing={5}>
                 { itemList.map(item => (
                     <Grid item lg={3} md={4} sm={6} xs={12} key={item.id}>
-                        <ProductItem id={item.id} imgUrl={item.imgUrl} title={item.title} />
+                        <ProductItem id={item.id} imgUrl={item.imgUrl} title={item.title} score={item.score} />
                     </Grid>
                 ))}
             </Grid>

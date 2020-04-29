@@ -2,6 +2,7 @@ export interface PrdItemInterface {
     id: string
     imgUrl: string
     title: string
+    score?: string
 }
 
 export interface PrdItemDetailInterface {
