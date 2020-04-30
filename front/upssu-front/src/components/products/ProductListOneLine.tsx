@@ -80,7 +80,7 @@ const ProductListOneLine: FunctionComponent<OneLineListTypeInterface> = ({type, 
                     }
 
                 } else if(type === 'best') {
-                    response = await axios.get(`${SERVER_IP}/products?limit=4&page=0`)
+                    response = await axios.get(`${SERVER_IP}/products?limit=4&page=1`)
                     setItemList(response.data.result)
 
                 } else if(type === 'spec') {
