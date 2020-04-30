@@ -19,8 +19,7 @@ const ProductItem: FunctionComponent<PrdItemInterface> = (props: PrdItemInterfac
     }
 
     const handleErrorImg = () => {
-        console.log('이미지가 없어')
-        setSrc('http://placehold.it/100/ffffff?text=image')
+        setSrc('http://placehold.it/600/ffffff?text=image')
     }
 
     return (

@@ -9,6 +9,7 @@ import SearchIcon from '@material-ui/icons/Search'
 import { getToken, logout } from '../../lib/authentication'
 
 import './style/Header.scss'
+import '../../styles/scss/index.scss'
 
 const Header: FunctionComponent = () => {
 
@@ -58,7 +59,7 @@ const Header: FunctionComponent = () => {
 
     return (
         <div className={'header ' + (scroll > 116 && 'header-fix')}>
-            <div className="template-lg">
+            <div className={"template-lg " + (width <= 768 && 'md-body-content')}>
                 <div className="user-box-lg" hidden={scroll > 116}>
                 { getToken() ?                  
                     <a className='logout-box' onClick={handleClickLogout}>로그아웃</a>
@@ -89,6 +90,7 @@ const Header: FunctionComponent = () => {
                             value={keyword}
                             onChange={handleChangeInput}
                             onKeyDown={handleEnter}
+                            placeholder='영양제 또는 증상을 검색하세요.'
                         />
                     </div>
                 </div>

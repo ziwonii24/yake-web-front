@@ -32,6 +32,7 @@ const ProductItemDetail: FunctionComponent<ItemIdInterface> = ({id}: ItemIdInter
 
     const [ loading, setLoading ] = useState<Boolean>(true)
     const [ item, setItem ] = useState<PrdItemDetailInterface>(init)
+    const [ src, setSrc ] = useState<string>('')
 
     useEffect(() => {
         const fetchData = async () => {
@@ -40,9 +41,6 @@ const ProductItemDetail: FunctionComponent<ItemIdInterface> = ({id}: ItemIdInter
             try {
                 const token = getToken()
                 let response: any;
-
-                console.log('token', token)
-                console.log(!token ? '토큰 없어' : '토큰있어')
 
                 if(!token) {
                     response = await axios.get(`${SERVER_IP}/product/${id}`)
@@ -58,7 +56,6 @@ const ProductItemDetail: FunctionComponent<ItemIdInterface> = ({id}: ItemIdInter
                     )
                 }
 
-                console.log(response.data)
                 setItem(response.data)
 
             } catch(e) {
@@ -72,6 +69,10 @@ const ProductItemDetail: FunctionComponent<ItemIdInterface> = ({id}: ItemIdInter
 
     }, [])
 
+    const handleErrorImg = () => {
+        setSrc('http://placehold.it/600/ffffff?text=image')
+    }
+
     if(loading) {
         return (
             <div className='loading-template'>
@@ -83,7 +84,7 @@ const ProductItemDetail: FunctionComponent<ItemIdInterface> = ({id}: ItemIdInter
     return (
         <div className='detail-template'>
             <div className='detail-img-box'>
-                <img src={item.imgurl} alt='img' />
+                <img src={src} onError={handleErrorImg} alt='img' />
             </div>
             <div className='detail-desc-box'>
                 <div className='desc-title-box'>
