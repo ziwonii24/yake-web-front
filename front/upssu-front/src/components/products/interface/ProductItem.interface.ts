@@ -22,6 +22,7 @@ export interface PrdItemDetailInterface {
 }
 
 export interface OneLineListTypeInterface {
+    id : string
     type: string
 }
 

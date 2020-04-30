@@ -20,7 +20,7 @@ const ItemDetailPage: FunctionComponent<RouteComponentProps<Params>> = ({ locati
     return (
         <div>
             <ProductItemDetail id={itemId}/>
-            <ProductListOneLine type={'rel'} />
+            <ProductListOneLine id={itemId} type={'rel'} />
         </div>
     )
 }
