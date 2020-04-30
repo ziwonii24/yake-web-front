@@ -46,9 +46,9 @@ const MainPage = () => {
     return (
         <div>
             <HotKeywordList />
-            { isShowable && <ProductListOneLine type={'rec'} /> }
-            <ProductListOneLine type={'best'} />
-            <ProductListOneLine type={'spec'} />
+            { isShowable && <ProductListOneLine id={''} type={'rec'} /> }
+            <ProductListOneLine id={''} type={'best'} />
+            <ProductListOneLine id={''} type={'spec'} />
         </div>
     )
 }

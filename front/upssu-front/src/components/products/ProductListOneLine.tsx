@@ -60,7 +60,7 @@ const getSpecTitle = (obj: SpecInterface): string => {
     return `${ageStr} ${genderStr}`
 }
 
-const ProductListOneLine: FunctionComponent<OneLineListTypeInterface> = ({type}: OneLineListTypeInterface) => {
+const ProductListOneLine: FunctionComponent<OneLineListTypeInterface> = ({type, id}: OneLineListTypeInterface) => {
 
     const SERVER_IP = process.env.REACT_APP_SERVER_IP
 
@@ -118,7 +118,9 @@ const ProductListOneLine: FunctionComponent<OneLineListTypeInterface> = ({type}:
                     setItemList(response.data.result)
 
                 } else if(type === 'rel') {
-                    // response = await axios.get(`${SERVER_IP}/search/elastic?keyword=${keyword}`)
+                    response = await axios.get(`${SERVER_IP}/relation/${id}`)
+                    console.log(response.data.related_product_list)
+                    // setItemList(response.data.related_product_list)
                 }
                 
             } catch(e) {
