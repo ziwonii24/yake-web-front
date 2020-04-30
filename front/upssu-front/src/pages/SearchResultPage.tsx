@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, ChangeEvent } from 'react'
+import React, { FunctionComponent, ChangeEvent } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import qs from 'qs'
 
@@ -30,7 +30,6 @@ const SearchResultPage: FunctionComponent<RouteComponentProps<Params>> = ({ loca
     const handleChangeTab = (e: ChangeEvent<{}>, newValue: number) => {
         const selectedTab = newValue === 0 ? 'a' : 'b'
         const savedPage = Number(localStorage.getItem(selectedTab))
-        console.log('savedPage', savedPage)
 
         window.location.href = `/search?keyword=${keyword}&tab=${selectedTab}&page=${savedPage}`
     }

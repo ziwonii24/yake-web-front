@@ -3,7 +3,6 @@ import { Route, Switch } from 'react-router'
 
 import Header from '../components/header/Header'
 import MainPage from '../pages/MainPage'
-import ItemListPage from '../pages/ItemListPage'
 import SearchResultPage from '../pages/SearchResultPage'
 import ItemDetailPage from '../pages/ItemDetailPage'
 import LoginPage from '../pages/LoginPage'
@@ -17,7 +16,6 @@ const routes = (
         <Route exact path="/" component={MainPage} />
         <Route exact path="/search" component={SearchResultPage} />
         <Route exact path="/detail" component={ItemDetailPage} />
-        <Route exact path="/list" component={ItemListPage} />
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/join" component={JoinPage} />
     </Switch>

@@ -36,14 +36,10 @@ const Header: FunctionComponent = () => {
     }, [])
 
     const handleChangeInput = useCallback(e => {
-        console.log(e.target.value)
         setKeyword(e.target.value)
-        console.log(keyword)
     }, [keyword])
 
     const handleSubmit = () => {
-        console.log('keyword', keyword)
-        console.log(`/search?keyword=${keyword}`)
         window.location.href = `/search?keyword=${keyword}`
     }
 

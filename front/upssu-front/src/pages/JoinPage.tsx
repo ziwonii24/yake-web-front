@@ -66,13 +66,10 @@ const JoinPage = () => {
     const handleClickCheckId = async (e: MouseEvent<HTMLElement>) => {
         e.preventDefault()
 
-        console.log(userId)
-
         // TODO : trim 설정, 아무것도 안쓰면 안되게, 입력후 엔터해도 작동되도록
 
         try {
             const response = await axios.get(`${SERVER_IP}/auth/signup?user_id=${userId}`)
-            console.log(response.data)
 
             if(response.data.msg === 'possible') {
                 setIdCheckMsg('사용 가능한 아이디입니다.')
@@ -100,7 +97,7 @@ const JoinPage = () => {
         setLoading(true)
 
         try {
-            const response = await axios.post(
+            await axios.post(
                 `${SERVER_IP}/auth/signup`, 
                 {
                     'user_id': userId,
@@ -112,7 +109,6 @@ const JoinPage = () => {
                     headers: { 'Content-Type': 'application/json' }
                 }
             )
-            console.log(response.data)            
 
             // TODO : 회원가입 성공한 경우 alert띄우고 로그인 페이지로
             alert('회원가입을 환영합니다~!')

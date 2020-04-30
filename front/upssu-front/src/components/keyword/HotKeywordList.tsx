@@ -15,6 +15,7 @@ const init: KeywordInterface = {
     keyword : '',
     count : 0
 }
+
 const HotKeywordList = () => {
 
     const SERVER_IP = process.env.REACT_APP_SERVER_IP
@@ -28,8 +29,8 @@ const HotKeywordList = () => {
 
             try {
                 const response = await axios.get(`${SERVER_IP}/hotkeyword?page=1&limit=5`)
-                // console.log(response.data.result)
                 setKeywordList(response.data.result)
+
             } catch(e) {
                 console.log(e)
             }
@@ -38,6 +39,10 @@ const HotKeywordList = () => {
         fetchData()
 
     }, [])
+
+    const handleClickHotKeyword = (keyword: string) => {
+        window.location.href = `/search?keyword=${keyword}`
+    }
 
     return (
         <div className='keyword-template'>
@@ -52,7 +57,7 @@ const HotKeywordList = () => {
                 :
                     keywordList.map((item, idx) => (
                         <div className="keyword-item-box" key={idx}>
-                            <div className='keyword-item'>
+                            <div className='keyword-item' onClick={() => handleClickHotKeyword(item.keyword)} >
                                 <a>{item.keyword}</a>
                             </div>
                         </div>

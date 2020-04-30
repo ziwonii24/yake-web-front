@@ -43,10 +43,6 @@ const ProductListMultiLine: FunctionComponent<MultiLineListTypeInterface> = (pro
 
                 // 일반 검색
                 if(type === 'search' && tab === 'a') {
-                    console.log('token', token)
-                    console.log(!token ? '토큰 없어' : '토큰있어')
-                    console.log(!page ? '페이지 없어' : '페이지 있어')
-
                     if(!token) {
                         if(!page) {
                             response = await axios.get(`${SERVER_IP}/search/elastic?keyword=${keyword}`)
@@ -82,7 +78,6 @@ const ProductListMultiLine: FunctionComponent<MultiLineListTypeInterface> = (pro
                 // 스마트 검색
                 else if(type === 'search' && tab === 'b') {
                     response = await axios.get(`http://52.78.166.109:9000/deepsearch?keyword=${keyword}&page=${page || 1}`)
-
                     setItemList(response.data.result)
                 }
                 
@@ -115,20 +110,24 @@ const ProductListMultiLine: FunctionComponent<MultiLineListTypeInterface> = (pro
 
     return (
         <div className='prdList-multi-template'>
-            <Grid container spacing={5}>
-                { itemList.map(item => (
-                    <Grid item lg={3} md={4} sm={6} xs={12} key={item.id}>
-                        <ProductItem 
-                            id={item.id} 
-                            imgUrl={item.imgUrl} 
-                            title={item.title} 
-                            score={item.score} 
-                            averageRating={item.averageRating}
-                            totalRatingCount={item.totalRatingCount}
-                        />
-                    </Grid>
-                ))}
-            </Grid>
+            { itemList.length < 1 ?
+                <p>검색 결과가 없습니다.</p>
+            :
+                <Grid container spacing={5}>
+                    { itemList.map(item => (
+                        <Grid item lg={3} md={4} sm={6} xs={12} key={item.id}>
+                            <ProductItem 
+                                id={item.id} 
+                                imgUrl={item.imgUrl} 
+                                title={item.title} 
+                                score={item.score} 
+                                averageRating={item.averageRating}
+                                totalRatingCount={item.totalRatingCount}
+                            />
+                        </Grid>
+                    ))}
+                </Grid>                
+            }            
 
             <Pagination className='pagination' count={totalPage} page={page || 1} onChange={handleChangePage} />
         </div>

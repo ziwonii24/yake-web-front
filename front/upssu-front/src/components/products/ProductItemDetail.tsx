@@ -3,7 +3,7 @@ import axios from 'axios'
 import dotenv from 'dotenv'
 
 import CircularProgress from '@material-ui/core/CircularProgress'
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableRow } from '@material-ui/core';
 
 import './style/ProductItemDetail.scss'
 
@@ -57,6 +57,7 @@ const ProductItemDetail: FunctionComponent<ItemIdInterface> = ({id}: ItemIdInter
                 }
 
                 setItem(response.data)
+                setSrc(`http://52.78.166.109${response.data.imgurl}`)
 
             } catch(e) {
                 console.log(e)

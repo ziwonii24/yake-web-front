@@ -13,15 +13,6 @@ import ProductItem from './ProductItem'
 
 dotenv.config()
 
-const init: PrdItemInterface = {
-    id: '',
-    imgUrl: '',
-    title: '',
-    score: '',
-    averageRating: 0,
-    totalRatingCount: 0
-}
-
 const getSpecObject = (): SpecInterface => {
     const token = getToken()
     if(token) {
@@ -90,8 +81,6 @@ const ProductListOneLine: FunctionComponent<OneLineListTypeInterface> = ({type, 
 
                 } else if(type === 'best') {
                     response = await axios.get(`${SERVER_IP}/products?limit=4&page=0`)
-
-                    // console.log('인기 결과', response.data.result)
                     setItemList(response.data.result)
 
                 } else if(type === 'spec') {
@@ -119,8 +108,8 @@ const ProductListOneLine: FunctionComponent<OneLineListTypeInterface> = ({type, 
 
                 } else if(type === 'rel') {
                     response = await axios.get(`${SERVER_IP}/relation/${id}`)
-                    console.log(response.data.related_product_list)
-                    // setItemList(response.data.related_product_list)
+                    setItemList(response.data.result)
+                    
                 }
                 
             } catch(e) {

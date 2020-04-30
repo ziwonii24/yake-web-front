@@ -44,7 +44,6 @@ const LoginPage = () => {
                     headers: { 'Content-Type': 'application/json' }
                 }
             )
-            console.log(response.data)            
 
             // TODO : 로그인 성공
             login(response.data.token)

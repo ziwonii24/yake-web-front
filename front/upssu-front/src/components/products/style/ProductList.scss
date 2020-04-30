@@ -1,5 +1,9 @@
 .prdList-multi-template {
     margin: 5vh 15vw;
+
+    p {
+        text-align: center;
+    }
 }
 
 .pagination {
@@ -25,10 +29,8 @@
 .prdList-one-list {
     margin: 0 15vw;
     display: flex;
-    // border: 1px solid blue;
 }
 
 .prdList-one-item-box {
-    // border: 1px solid red;
     padding: 0.5rem;
 }
