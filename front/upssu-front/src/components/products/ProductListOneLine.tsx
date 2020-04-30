@@ -16,7 +16,10 @@ dotenv.config()
 const init: PrdItemInterface = {
     id: '',
     imgUrl: '',
-    title: ''
+    title: '',
+    score: '',
+    averageRating: 0,
+    totalRatingCount: 0
 }
 
 const getSpecObject = (): SpecInterface => {
@@ -64,7 +67,6 @@ const ProductListOneLine: FunctionComponent<OneLineListTypeInterface> = ({type}:
     const title = type === 'rec' ? '추천 상품' : type === 'best' ? '인기 상품' : type === 'spec' ? '이 많이 찾은 상품' : '관련 상품'
 
     const specObject: SpecInterface = getSpecObject()
-    console.log(specObject)
 
     const specTitle = (type === 'spec') ? getSpecTitle(specObject) : ''
 
@@ -80,11 +82,12 @@ const ProductListOneLine: FunctionComponent<OneLineListTypeInterface> = ({type}:
                 let response: any;
 
                 if(type === 'rec') {
-                    // response = await axios.get(`${SERVER_IP}/search/elastic?keyword=${keyword}`)
-                    // response = await axios.get(`${SERVER_IP}/products?limit=4&page=0`)
+                    if(token) {
+                        const tokenDecoded = decode(token)
+                        response = await axios.get(`http://52.78.166.109:9000/recommend/related?user_id=${tokenDecoded.identity.user_id}`)
+                        setItemList(response.data.result)
+                    }
 
-                    // console.log('인기 결과', response.data.result)
-                    // setItemList(response.data.result)
                 } else if(type === 'best') {
                     // response = await axios.get(`${SERVER_IP}/products?limit=4&page=0`)
 
@@ -93,7 +96,6 @@ const ProductListOneLine: FunctionComponent<OneLineListTypeInterface> = ({type}:
 
                 } else if(type === 'spec') {
                     if(!token) {
-                        console.log('!token', specObject)
                         response = await axios.post(
                             `${SERVER_IP}/products/recommendbyage`, 
                             {
@@ -113,10 +115,7 @@ const ProductListOneLine: FunctionComponent<OneLineListTypeInterface> = ({type}:
                         )
                     }
 
-                    console.log('연령별 결과', response.data.result)
                     setItemList(response.data.result)
-
-
 
                 } else if(type === 'rel') {
                     // response = await axios.get(`${SERVER_IP}/search/elastic?keyword=${keyword}`)
@@ -148,7 +147,14 @@ const ProductListOneLine: FunctionComponent<OneLineListTypeInterface> = ({type}:
                 :
                     itemList.map(item => (
                         <div className='prdList-one-item-box' key={item.id}>
-                            <ProductItem id={item.id} imgUrl={item.imgUrl} title={item.title} />
+                            <ProductItem 
+                                id={item.id} 
+                                imgUrl={item.imgUrl} 
+                                title={item.title} 
+                                score={item.score} 
+                                averageRating={item.averageRating}
+                                totalRatingCount={item.totalRatingCount}
+                            />
                         </div>
                     ))
                 }

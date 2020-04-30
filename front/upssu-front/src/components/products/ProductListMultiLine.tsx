@@ -18,7 +18,9 @@ const init: PrdItemInterface = {
     id: '',
     imgUrl: '',
     title: '',
-    score: ''
+    score: '',
+    averageRating: 0,
+    totalRatingCount: 0
 }
 
 const ProductListMultiLine: FunctionComponent<MultiLineListTypeInterface> = (props: MultiLineListTypeInterface) => {
@@ -116,7 +118,14 @@ const ProductListMultiLine: FunctionComponent<MultiLineListTypeInterface> = (pro
             <Grid container spacing={5}>
                 { itemList.map(item => (
                     <Grid item lg={3} md={4} sm={6} xs={12} key={item.id}>
-                        <ProductItem id={item.id} imgUrl={item.imgUrl} title={item.title} score={item.score} />
+                        <ProductItem 
+                            id={item.id} 
+                            imgUrl={item.imgUrl} 
+                            title={item.title} 
+                            score={item.score} 
+                            averageRating={item.averageRating}
+                            totalRatingCount={item.totalRatingCount}
+                        />
                     </Grid>
                 ))}
             </Grid>

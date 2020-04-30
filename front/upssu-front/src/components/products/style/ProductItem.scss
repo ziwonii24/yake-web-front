@@ -10,13 +10,18 @@
 
 .title-box {
     width: 100%;
-    font-size: 16px;
-    line-height: 23px;
+    font-size: 14px;
     cursor: pointer;
     margin-top: 1rem;
 }
 
 .score-box {
-    text-align: end;
+    text-align: start;
     margin-top: 10px;
+}
+
+.rating-box {
+    display: flex;
+    margin-top: 10px;
+    font-size: 12px;
 }

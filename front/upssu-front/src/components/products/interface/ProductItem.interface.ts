@@ -3,6 +3,8 @@ export interface PrdItemInterface {
     imgUrl: string
     title: string
     score?: string
+    averageRating?: number
+    totalRatingCount?: number
 }
 
 export interface PrdItemDetailInterface {
