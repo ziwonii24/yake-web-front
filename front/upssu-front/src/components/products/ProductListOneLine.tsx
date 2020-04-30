@@ -47,12 +47,14 @@ const getSpecObject = (): SpecInterface => {
 
 const getSpecTitle = (obj: SpecInterface): string => {
     const age = Number(obj.age)
-    const gender = (obj.gender === 'male') ? '남성' : '여성'
-
     const curYear = new Date().getFullYear()
     const calAge = Math.floor((curYear - age + 1) / 10) * 10
+    
+    const ageStr = (calAge < 20) ? '20대 이하' : (calAge > 60) ? '60대 이상' : calAge + '대'
+    
+    const genderStr = (obj.gender === 'male') ? '남성' : '여성'
 
-    return `${calAge}대 ${gender}`
+    return `${ageStr} ${genderStr}`
 }
 
 const ProductListOneLine: FunctionComponent<OneLineListTypeInterface> = ({type}: OneLineListTypeInterface) => {
@@ -91,11 +93,12 @@ const ProductListOneLine: FunctionComponent<OneLineListTypeInterface> = ({type}:
 
                 } else if(type === 'spec') {
                     if(!token) {
+                        console.log('!token', specObject)
                         response = await axios.post(
                             `${SERVER_IP}/products/recommendbyage`, 
-                            specObject,
-                            { 
-                                headers: { 'Content-Type': 'application/json' }
+                            {
+                                user_birth_year: specObject.age,
+                                user_gender: specObject.gender
                             }
                         )
                     } else {
