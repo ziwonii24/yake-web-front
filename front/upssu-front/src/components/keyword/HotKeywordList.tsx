@@ -28,7 +28,7 @@ const HotKeywordList = () => {
             setLoading(true)
 
             try {
-                const response = await axios.get(`${SERVER_IP}/hotkeyword?page=1&limit=5`)
+                const response = await axios.get(`${SERVER_IP}:8088/hotkeyword?page=1&limit=5`)
                 setKeywordList(response.data.result)
 
             } catch(e) {

@@ -69,7 +69,7 @@ const JoinPage = () => {
         // TODO : trim 설정, 아무것도 안쓰면 안되게, 입력후 엔터해도 작동되도록
 
         try {
-            const response = await axios.get(`${SERVER_IP}/auth/signup?user_id=${userId}`)
+            const response = await axios.get(`${SERVER_IP}:8088/auth/signup?user_id=${userId}`)
 
             if(response.data.msg === 'possible') {
                 setIdCheckMsg('사용 가능한 아이디입니다.')
@@ -98,7 +98,7 @@ const JoinPage = () => {
 
         try {
             await axios.post(
-                `${SERVER_IP}/auth/signup`, 
+                `${SERVER_IP}:8088/auth/signup`, 
                 {
                     'user_id': userId,
                     'user_password': userPass,

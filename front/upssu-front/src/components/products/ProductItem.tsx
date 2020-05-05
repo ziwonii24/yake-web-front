@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useState } from 'react'
+import dotenv from 'dotenv'
 
 import { TrendingUp } from '@material-ui/icons'
 import { Chip } from "@material-ui/core";
@@ -8,11 +9,15 @@ import './style/ProductItem.scss'
 
 import { PrdItemInterface } from './interface/ProductItem.interface'
 
+dotenv.config()
+
 const ProductItem: FunctionComponent<PrdItemInterface> = (props: PrdItemInterface) => {
+
+    const SERVER_IP = process.env.REACT_APP_SERVER_IP
 
     const { id, imgUrl, title, score, averageRating, totalRatingCount } = props
 
-    const [ src, setSrc ] = useState<string>(imgUrl)
+    const [ src, setSrc ] = useState<string>(`${SERVER_IP}${imgUrl}`)
 
     const handleClickItem = () => {
         window.location.href = `/detail?id=${id}`

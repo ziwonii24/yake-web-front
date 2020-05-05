@@ -43,10 +43,10 @@ const ProductItemDetail: FunctionComponent<ItemIdInterface> = ({id}: ItemIdInter
                 let response: any;
 
                 if(!token) {
-                    response = await axios.get(`${SERVER_IP}/product/${id}`)
+                    response = await axios.get(`${SERVER_IP}:8088/product/${id}`)
                 } else {
                     response = await axios.get(
-                        `${SERVER_IP}/auth/product/${id}`,
+                        `${SERVER_IP}:8088/auth/product/${id}`,
                         { 
                             headers: { 
                                 'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ const ProductItemDetail: FunctionComponent<ItemIdInterface> = ({id}: ItemIdInter
                 }
 
                 setItem(response.data)
-                setSrc(`http://52.78.166.109${response.data.imgurl}`)
+                setSrc(`${SERVER_IP}${response.data.imgurl}`)
 
             } catch(e) {
                 console.log(e)

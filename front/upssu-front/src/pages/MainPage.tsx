@@ -23,7 +23,7 @@ const MainPage = () => {
                     setShowable(false)
                 } else {
                     const response = await axios.get(
-                        `${SERVER_IP}/auth/searchcount`,
+                        `${SERVER_IP}:8088/auth/searchcount`,
                         { 
                             headers: { 
                                 'Content-Type': 'application/json',

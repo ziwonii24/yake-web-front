@@ -35,7 +35,7 @@ const LoginPage = () => {
 
         try {
             const response = await axios.post(
-                `${SERVER_IP}/auth/login`, 
+                `${SERVER_IP}:8088/auth/login`, 
                 {
                     'user_id': userId,
                     'user_password': userPass

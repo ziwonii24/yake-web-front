@@ -45,24 +45,24 @@ const ProductListMultiLine: FunctionComponent<MultiLineListTypeInterface> = (pro
                 if(type === 'search' && tab === 'a') {
                     if(!token) {
                         if(!page) {
-                            response = await axios.get(`${SERVER_IP}/search/elastic?keyword=${keyword}`)
+                            response = await axios.get(`${SERVER_IP}:8088/search/elastic?keyword=${keyword}`)
                         } else {
-                            response = await axios.get(`${SERVER_IP}/search/elastic?keyword=${keyword}&page=${page-1}`)
+                            response = await axios.get(`${SERVER_IP}:8088/search/elastic?keyword=${keyword}&page=${page-1}`)
                         }
                     } else {
                         if(!page) {
                             response = await axios.get(
-                                `${SERVER_IP}/auth/search/elastic?keyword=${keyword}`,
-                                    { 
-                                        headers: { 
-                                            'Content-Type': 'application/json',
-                                            'Authorization': `Bearer ${token}`
-                                        }
+                                `${SERVER_IP}:8088/auth/search/elastic?keyword=${keyword}`,
+                                { 
+                                    headers: { 
+                                        'Content-Type': 'application/json',
+                                        'Authorization': `Bearer ${token}`
                                     }
+                                }
                             )
                         } else {
                             response = await axios.get(
-                                `${SERVER_IP}/auth/search/elastic?keyword=${keyword}&page=${page-1}`,
+                                `${SERVER_IP}:8088/auth/search/elastic?keyword=${keyword}&page=${page-1}`,
                                 { 
                                     headers: { 
                                         'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ const ProductListMultiLine: FunctionComponent<MultiLineListTypeInterface> = (pro
                 }
                 // 스마트 검색
                 else if(type === 'search' && tab === 'b') {
-                    response = await axios.get(`http://52.78.166.109:9000/deepsearch?keyword=${keyword}&page=${page || 1}`)
+                    response = await axios.get(`${SERVER_IP}:9000/deepsearch?keyword=${keyword}&page=${page || 1}`)
                     setItemList(response.data.result)
                 }
                 

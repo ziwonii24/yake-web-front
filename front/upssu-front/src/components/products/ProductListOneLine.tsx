@@ -75,18 +75,16 @@ const ProductListOneLine: FunctionComponent<OneLineListTypeInterface> = ({type, 
                 if(type === 'rec') {
                     if(token) {
                         const tokenDecoded = decode(token)
-                        response = await axios.get(`http://52.78.166.109:9000/recommend/related?user_id=${tokenDecoded.identity.user_id}`)
-                        setItemList(response.data.result)
+                        response = await axios.get(`${SERVER_IP}:9000/recommend/related?user_id=${tokenDecoded.identity.user_id}`)
                     }
 
                 } else if(type === 'best') {
-                    response = await axios.get(`${SERVER_IP}/products?limit=4&page=1`)
-                    setItemList(response.data.result)
+                    response = await axios.get(`${SERVER_IP}:8088/products?limit=4&page=1`)
 
                 } else if(type === 'spec') {
                     if(!token) {
                         response = await axios.post(
-                            `${SERVER_IP}/products/recommendbyage`, 
+                            `${SERVER_IP}:8088/products/recommendbyage`, 
                             {
                                 user_birth_year: specObject.age,
                                 user_gender: specObject.gender
@@ -94,7 +92,7 @@ const ProductListOneLine: FunctionComponent<OneLineListTypeInterface> = ({type, 
                         )
                     } else {
                         response = await axios.get(
-                            `${SERVER_IP}/auth/products/recommendbyage`,
+                            `${SERVER_IP}:8088/auth/products/recommendbyage`,
                             { 
                                 headers: { 
                                     'Content-Type': 'application/json',
@@ -104,19 +102,17 @@ const ProductListOneLine: FunctionComponent<OneLineListTypeInterface> = ({type, 
                         )
                     }
 
-                    setItemList(response.data.result)
-
                 } else if(type === 'rel') {
-                    response = await axios.get(`${SERVER_IP}/relation/${id}`)
-                    setItemList(response.data.result)
-                    
+                    response = await axios.get(`${SERVER_IP}:8088/relation/${id}`)
                 }
+
+                setItemList(response.data.result)
                 
             } catch(e) {
                 console.log(e)
             }
             
-            setLoading(false)
+            // setLoading(false)
         }
         
         fetchData()
@@ -133,7 +129,7 @@ const ProductListOneLine: FunctionComponent<OneLineListTypeInterface> = ({type, 
             <div className='prdList-one-list'>
                 { loading ?
                     [1,2,3,4].map((data, idx) => (
-                        <ProductItemSkeleton key={idx} col={'main'} />
+                        <ProductItemSkeleton key={idx} />
                     ))
                 :
                     itemList.map(item => (
